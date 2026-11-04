@@ -6,6 +6,11 @@
 //   tantalus-ski-mountaineering.kmz  a ski area: draw the polygon, and add the named ski lines inside it if you like
 //   anything.geojson                 GeoJSON also works
 // Extra files for the same route: add a suffix after two dashes, e.g. wedge-mountain-nw-couloir--area.kml
+// A whole ski zone's lines (not tied to one route page): zone--whistler.kmz, zone--pemberton.kmz (zone slugs from zones.json)
+// Not ski? add the discipline: zone--garibaldi--run.gpx
+//
+// Lines with no name, a Gaia default name ("... Track 12", "Untitled Path") or a name with "TBD" or "?" stay off the public map
+// until they're given a proper name. Named points (huts, camps) show as hut markers; Gaia's (Start)/(End) points are ignored.
 import fs from "node:fs";
 import path from "node:path";
 import JSZip from "jszip";
@@ -13,7 +18,13 @@ import { DOMParser } from "@xmldom/xmldom";
 import { kml, gpx } from "@tmcw/togeojson";
 
 const DIR = "data/geo";
-const slugs = new Set(JSON.parse(fs.readFileSync("data/routes.json", "utf8")).map((r) => r.slug));
+const routes = JSON.parse(fs.readFileSync("data/routes.json", "utf8"));
+const slugs = new Set(routes.map((r) => r.slug));
+const discOf = Object.fromEntries(routes.map((r) => [r.slug, r.discipline]));
+const zoneOf = Object.fromEntries(routes.map((r) => [r.slug, r.zone]));
+const zoneSlugs = new Set(JSON.parse(fs.readFileSync("data/zones.json", "utf8")).map((z) => z.slug));
+const isDraft = (n) => !n || /track \d+|untitled|\btbd\b|\?/i.test(n);
+const drafts = {};
 const out = [];
 const round = (c) => (typeof c[0] === "number" ? [+c[0].toFixed(5), +c[1].toFixed(5)] : c.map(round));
 
@@ -37,23 +48,35 @@ function flatten(f) {
 
 const files = fs.existsSync(DIR) ? fs.readdirSync(DIR).filter((f) => /\.(kmz|kml|gpx|geojson|json)$/i.test(f)) : [];
 for (const file of files) {
-  const slug = path.basename(file).replace(/\.[^.]+$/, "").split("--")[0];
-  if (!slugs.has(slug)) { console.warn(`build-geo: ${file} skipped, no route with slug "${slug}"`); continue; }
+  const parts = path.basename(file).replace(/\.[^.]+$/, "").split("--");
+  const zoneFile = parts[0] === "zone";
+  const slug = zoneFile ? null : parts[0];
+  const zone = zoneFile ? parts[1] : zoneOf[slug];
+  if (zoneFile ? !zoneSlugs.has(zone) : !slugs.has(slug)) { console.warn(`build-geo: ${file} skipped, no ${zoneFile ? "zone" : "route"} called "${zoneFile ? zone : slug}"`); continue; }
+  const discipline = slug ? discOf[slug] : (["ski", "rock", "alpine", "run"].includes(parts[2]) ? parts[2] : "ski");
   try {
     const fc = await read(file);
     let n = 0;
     for (const f of (fc.features || []).flatMap(flatten)) {
       const t = f.geometry.type;
+      const nm = (f.properties?.name || "").trim();
+      if (t === "Point") {
+        if (!nm || /^\((start|end)\)$/i.test(nm)) continue;
+        out.push({ type: "Feature", properties: { slug, zone, discipline, kind: "hut", name: nm, n: 0 }, geometry: { type: "Point", coordinates: round(f.geometry.coordinates.slice(0, 2)) } });
+        continue;
+      }
       if (t !== "LineString" && t !== "Polygon") continue;
+      if (t === "LineString" && isDraft(nm)) { (drafts[file] = drafts[file] || []).push(nm || "(no name)"); continue; }
       // Gaia draws areas as closed tracks sometimes; a closed line tagged "area" in its name becomes a zone.
       const name = (f.properties?.name || "").trim();
       let geometry = { type: t, coordinates: round(f.geometry.coordinates.map ? f.geometry.coordinates : []) };
       if (t === "LineString") geometry.coordinates = geometry.coordinates.map((c) => c.slice(0, 2));
       if (t === "Polygon") geometry.coordinates = geometry.coordinates.map((r) => r.map((c) => c.slice(0, 2)));
-      out.push({ type: "Feature", properties: { slug, kind: t === "Polygon" ? "area" : "line", name, n: t === "LineString" ? ++n : 0 }, geometry });
+      out.push({ type: "Feature", properties: { slug, zone, discipline, kind: t === "Polygon" ? "area" : "line", name, n: t === "LineString" ? ++n : 0 }, geometry });
     }
   } catch (e) { console.warn(`build-geo: could not read ${file}: ${e.message}`); }
 }
 fs.writeFileSync("data/geometry.json", JSON.stringify({ type: "FeatureCollection", features: out }));
-const by = {}; out.forEach((f) => { by[f.properties.slug] = by[f.properties.slug] || { line: 0, area: 0 }; by[f.properties.slug][f.properties.kind]++; });
+const by = {}; out.forEach((f) => { const k = f.properties.slug || "zone:" + f.properties.zone; by[k] = by[k] || { line: 0, area: 0, hut: 0 }; by[k][f.properties.kind]++; });
+for (const [file, list] of Object.entries(drafts)) console.log(`build-geo: ${file}: ${list.length} unnamed/draft lines kept off the map (${[...new Set(list)].slice(0, 6).join(", ")}${list.length > 6 ? ", ..." : ""})`);
 console.log(`build-geo: ${out.length} shapes for ${Object.keys(by).length} routes`, JSON.stringify(by));

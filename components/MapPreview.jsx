@@ -12,7 +12,7 @@ export default function MapPreview({ zones, routes, geometry }) {
   const count = (slug) => routes.filter((r) => !slug || r.zone === slug).length;
   return (
     <div className="mp">
-      <AltusMap palette={palette} zones={zones} routes={routes} geometry={geometry} activeZone={zone} onZone={(s) => { setZone(s); setRoute(null); }} onRoute={(p) => setRoute({ ...routes.find((r) => r.slug === p.slug), line: p.line })} />
+      <AltusMap palette={palette} zones={zones} routes={routes} geometry={geometry} activeZone={zone} onZone={(s) => { setZone(s); setRoute(null); }} onRoute={(p) => { const r = routes.find((x) => x.slug === p.slug); setRoute(r ? { ...r, line: p.line } : { name: p.line, zone: p.zone, discipline: p.discipline, zoneOnly: true, zoneName: zones.find((z) => z.slug === p.zone)?.name }); }} />
       <div className="mp-title">
         <p className="eyebrow">Map style preview</p>
         <h1>Sea to Sky Routes.</h1>
@@ -22,10 +22,16 @@ export default function MapPreview({ zones, routes, geometry }) {
       {route && (
         <div className="mp-card">
           <button className="x" aria-label="Close" onClick={() => setRoute(null)}>×</button>
-          <span className="eyebrow">{route.discipline} · {route.level}</span>
-          <b>{route.name}</b>{route.line && <span className="eyebrow">Line: {route.line}</span>}
-          <span>{route.summary}</span>
-          <Link className="btn" href={routeHref(route)}>View route</Link>
+          <span className="eyebrow">{route.discipline}{route.level ? ` · ${route.level}` : ""}</span>
+          <b>{route.name}</b>
+          {route.zoneOnly ? (<>
+            <span>A line in {route.zoneName}. Ask us about guiding it.</span>
+            <Link className="btn" href={`/routes/${route.zone}`}>{route.zoneName} routes</Link>
+          </>) : (<>
+            {route.line && <span className="eyebrow">Line: {route.line}</span>}
+            <span>{route.summary}</span>
+            <Link className="btn" href={routeHref(route)}>View route</Link>
+          </>)}
         </div>
       )}
       <nav className="mp-blocks" aria-label="Choose an area">
