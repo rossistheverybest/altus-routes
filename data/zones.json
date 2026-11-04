@@ -1,23 +1,198 @@
 [
-  {"slug":"north-shore","name":"North Shore & Howe Sound","order":1,
-   "blurb":"Vancouver's backyard. Resort-accessed snow on Seymour and Cypress in winter, and the rugged Howe Sound Crest Trail in summer. Low elevation means a short, wet ski season, and fog has caught out many parties close to the city.",
-   "polygon":[[49.30,-123.30],[49.30,-122.88],[49.45,-122.88],[49.58,-123.12],[49.58,-123.30]]},
-  {"slug":"squamish","name":"Squamish","order":2,
-   "blurb":"The granite capital of Canada. The Stawamus Chief, the Apron and the Smoke Bluffs are minutes from town, and the Sea to Sky Gondola puts Sky Pilot and Habrich within a day's reach. Tricouni sits to the north on the west side of the highway.",
-   "polygon":[[49.58,-123.28],[49.58,-123.12],[49.62,-123.04],[49.80,-123.06],[50.00,-123.12],[50.00,-123.23],[49.72,-123.23],[49.68,-123.28]]},
-  {"slug":"tantalus","name":"Tantalus Range","order":3,
-   "blurb":"The skyline across the Squamish River. Steep granite, heavily glaciated and usually reached by helicopter from Squamish. A big-mountain playground for the traverse in summer and for steep skiing from the Haberl Hut in spring.",
-   "polygon":[[49.72,-123.42],[49.72,-123.24],[49.92,-123.24],[49.92,-123.42]]},
-  {"slug":"garibaldi","name":"Garibaldi Park South","order":4,
-   "blurb":"Diamond Head, the Garibaldi Neve and Garibaldi Lake. Volcanic peaks and big icefields reached by long approaches from Squamish and Rubble Creek. Classic day runs to the Black Tusk and Panorama Ridge in summer, glacier ski touring in spring.",
-   "polygon":[[49.74,-123.06],[49.80,-123.06],[50.00,-123.12],[50.00,-122.86],[49.74,-122.90]]},
-  {"slug":"whistler","name":"Whistler & Spearhead","order":5,
-   "blurb":"Lift access from Whistler Blackcomb puts you in glaciated alpine terrain within minutes: the Spearhead Range, the Musical Bumps and the Blackcomb and Decker glaciers. Wedge Mountain, the highest peak in Garibaldi Park, rises above the north end of the valley.",
-   "polygon":[[50.00,-123.23],[50.00,-122.80],[50.18,-122.72],[50.20,-123.23]]},
-  {"slug":"pemberton","name":"Pemberton","order":6,
-   "blurb":"Mount Currie towers over the Pemberton valley with some of the biggest ski vertical in the corridor. Drier and colder than Whistler, with long spring days.",
-   "polygon":[[50.20,-122.95],[50.20,-122.66],[50.36,-122.60],[50.40,-122.95]]},
-  {"slug":"duffey","name":"Duffey Lake Road","order":7,
-   "blurb":"Road-accessed alpine on the edge of the interior. A drier, colder snowpack than the coast (forecast as a separate region), the Joffre Group's big north faces, and tree skiing straight from the highway.",
-   "polygon":[[50.30,-122.60],[50.30,-122.30],[50.50,-122.25],[50.50,-122.58]]}
+ {
+  "slug": "north-shore",
+  "name": "North Shore & Howe Sound",
+  "order": 1,
+  "blurb": "Vancouver's backyard. Resort-accessed snow on Seymour and Cypress in winter, and the rugged Howe Sound Crest Trail in summer. Low elevation means a short, wet ski season, and fog has caught out many parties close to the city.",
+  "polygon": [
+   [
+    49.3,
+    -123.3
+   ],
+   [
+    49.3,
+    -122.88
+   ],
+   [
+    49.45,
+    -122.88
+   ],
+   [
+    49.58,
+    -123.12
+   ],
+   [
+    49.58,
+    -123.3
+   ]
+  ]
+ },
+ {
+  "slug": "squamish",
+  "name": "Squamish",
+  "order": 2,
+  "blurb": "The granite capital of Canada. The Stawamus Chief, the Apron and the Smoke Bluffs are minutes from town, and the Sea to Sky Gondola puts Sky Pilot and Habrich within a day's reach. Tricouni sits to the north on the west side of the highway.",
+  "polygon": [
+   [
+    49.58,
+    -123.28
+   ],
+   [
+    49.58,
+    -123.12
+   ],
+   [
+    49.62,
+    -123.04
+   ],
+   [
+    49.8,
+    -123.06
+   ],
+   [
+    50.0,
+    -123.12
+   ],
+   [
+    50.0,
+    -123.23
+   ],
+   [
+    49.72,
+    -123.23
+   ],
+   [
+    49.68,
+    -123.28
+   ]
+  ]
+ },
+ {
+  "slug": "tantalus",
+  "name": "Tantalus Range",
+  "order": 3,
+  "blurb": "The skyline across the Squamish River. Steep granite, heavily glaciated and usually reached by helicopter from Squamish. A big-mountain playground for the traverse in summer and for steep skiing from the Haberl Hut in spring.",
+  "polygon": [
+   [
+    49.72,
+    -123.42
+   ],
+   [
+    49.72,
+    -123.24
+   ],
+   [
+    49.92,
+    -123.24
+   ],
+   [
+    49.92,
+    -123.42
+   ]
+  ]
+ },
+ {
+  "slug": "garibaldi",
+  "name": "Garibaldi Park South",
+  "order": 4,
+  "blurb": "Diamond Head, the Garibaldi Neve and Garibaldi Lake. Volcanic peaks and big icefields reached by long approaches from Squamish and Rubble Creek. Classic day runs to the Black Tusk and Panorama Ridge in summer, glacier ski touring in spring.",
+  "polygon": [
+   [
+    49.74,
+    -123.06
+   ],
+   [
+    49.8,
+    -123.06
+   ],
+   [
+    50.0,
+    -123.12
+   ],
+   [
+    50.0,
+    -122.86
+   ],
+   [
+    49.74,
+    -122.9
+   ]
+  ]
+ },
+ {
+  "slug": "whistler",
+  "name": "Whistler & Spearhead",
+  "order": 5,
+  "blurb": "Lift access from Whistler Blackcomb puts you in glaciated alpine terrain within minutes: the Spearhead Range, the Musical Bumps and the Blackcomb and Decker glaciers. Wedge Mountain, the highest peak in Garibaldi Park, rises above the north end of the valley.",
+  "polygon": [
+   [
+    49.9961,
+    -122.7729
+   ],
+   [
+    50.0,
+    -123.23
+   ],
+   [
+    50.2,
+    -123.23
+   ],
+   [
+    50.18,
+    -122.72
+   ],
+   [
+    50.0729,
+    -122.7418
+   ]
+  ]
+ },
+ {
+  "slug": "pemberton",
+  "name": "Pemberton",
+  "order": 6,
+  "blurb": "Mount Currie towers over the Pemberton valley with some of the biggest ski vertical in the corridor. Drier and colder than Whistler, with long spring days.",
+  "polygon": [
+   [
+    50.2,
+    -122.95
+   ],
+   [
+    50.2,
+    -122.66
+   ],
+   [
+    50.36,
+    -122.6
+   ],
+   [
+    50.4,
+    -122.95
+   ]
+  ]
+ },
+ {
+  "slug": "duffey",
+  "name": "Duffey Lake Road",
+  "order": 7,
+  "blurb": "Road-accessed alpine on the edge of the interior. A drier, colder snowpack than the coast (forecast as a separate region), the Joffre Group's big north faces, and tree skiing straight from the highway.",
+  "polygon": [
+   [
+    50.3,
+    -122.6
+   ],
+   [
+    50.3,
+    -122.3
+   ],
+   [
+    50.5,
+    -122.25
+   ],
+   [
+    50.5,
+    -122.58
+   ]
+  ]
+ }
 ]
