@@ -66,6 +66,8 @@ export default function AltusMap({ zones, routes, geometry = null, activeZone = 
         hit("zone-fill", (p) => { if (!state.current.activeZone) cb.current.onZone?.(p.slug); });
         map.__ready = true;
         applyZone(true); applyFilters(); cb.current.onReady?.();
+        setTimeout(() => { map.resize(); applyZone(true); }, 350);
+        let rt; new ResizeObserver(() => { clearTimeout(rt); rt = setTimeout(() => { if (!state.current.selected) applyZone(true); }, 250); }).observe(el.current);
       });
     })();
     return () => { cancelled = true; map?.remove(); mapRef.current = null; };
