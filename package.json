@@ -1,0 +1,16 @@
+{
+  "name": "altus-routes",
+  "private": true,
+  "version": "0.1.0",
+  "scripts": {
+    "dev": "next dev",
+    "build": "node scripts/sync-sheet.mjs && next build",
+    "start": "next start",
+    "sync": "node scripts/sync-sheet.mjs"
+  },
+  "dependencies": {
+    "next": "15.5.4",
+    "react": "19.1.1",
+    "react-dom": "19.1.1"
+  }
+}
