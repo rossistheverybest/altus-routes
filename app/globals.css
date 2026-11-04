@@ -233,3 +233,25 @@ h1{font-family:var(--f-head);font-weight:700;font-size:clamp(48px,8vw,112px);let
 .zcard{padding:0 0 16px;overflow:hidden}
 .zcard>span:not(.ztopo){padding-inline:16px}
 .ztopo{position:relative;display:block;height:110px;margin-bottom:8px}
+
+/* map style preview */
+.mp{position:relative;height:calc(100vh - 110px);min-height:640px;margin:0 16px 16px;border-radius:12px;overflow:hidden;background:#1d1d1c}
+.altusmap{position:absolute;inset:0}
+.mp-title{position:absolute;left:24px;top:24px;width:420px;max-width:calc(100% - 48px);background:rgba(25,25,25,.88);border:1px solid #2a2a2b;border-radius:10px;padding:20px;display:flex;flex-direction:column;gap:10px}
+.mp-title h1{font-size:48px;margin:0}
+.mp-title p{margin:0;font-size:16px}
+.mp-toggle{display:flex;gap:6px;margin-top:4px}
+.mp-toggle button{font-family:var(--f-head);font-weight:300;letter-spacing:.8px;text-transform:uppercase;font-size:13px;background:var(--btn);border:0;border-radius:var(--r);padding:10px 16px;cursor:pointer}
+.mp-toggle button[aria-pressed="true"]{background:var(--gold);color:#000}
+.mp-blocks{position:absolute;left:24px;right:24px;bottom:24px;display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:8px}
+.mp-blocks button{display:flex;flex-direction:column;gap:4px;text-align:left;background:rgba(25,25,25,.9);border:1px solid #3a3a3c;border-radius:var(--r);padding:12px;cursor:pointer;color:var(--ink)}
+.mp-blocks button b{font-family:var(--f-head);font-weight:600;font-size:15px;line-height:1.1}
+.mp-blocks button span{font-size:13px;color:var(--muted)}
+.mp-blocks button[aria-pressed="true"]{border:2px solid var(--gold);box-shadow:5px 5px 0 0 var(--gold)}
+@media (max-width:900px){.mp-blocks{grid-template-columns:repeat(2,minmax(0,1fr))}.mp-title{width:auto}}
+.mp-card{position:absolute;right:24px;top:90px;width:320px;background:#191919;border:1px solid var(--gold);box-shadow:6px 6px 0 0 var(--gold);border-radius:var(--r);padding:16px;display:flex;flex-direction:column;gap:8px}
+.mp-card b{font-family:var(--f-head);font-weight:600;font-size:22px}
+.mp-card span{font-size:15px}
+.mp-card .x{position:absolute;top:6px;right:8px;background:none;border:0;font-size:22px;cursor:pointer}
+.maplibregl-ctrl-group{background:#191919!important;border:1px solid #3a3a3c}
+.maplibregl-ctrl-group button span{filter:invert(1)}
