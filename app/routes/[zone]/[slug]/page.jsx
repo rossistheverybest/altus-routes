@@ -2,7 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ROUTES, CRAG, zoneBy, routeBy, reportsFor, routeForCragLine, lite } from "../../../../lib/data";
 import { DISC, unit, routeHref, zoneHref } from "../../../../lib/shared";
-import { SITE_URL, BUILD_NOTES, INDEXABLE_STATUSES } from "../../../../lib/site";
+import { SITE_URL, BUILD_NOTES, SITE_NOINDEX, INDEXABLE_STATUSES } from "../../../../lib/site";
 import { cragSVG } from "../../../../lib/crag";
 import { PageHead, JsonLd } from "../../../../components/Chrome";
 import Card from "../../../../components/Card";
@@ -10,6 +10,7 @@ import CragPage from "../../../../components/CragPage";
 import TopoMap from "../../../../components/TopoMap";
 import TopoTiles from "../../../../components/TopoTiles";
 import Profile, { hasProfile } from "../../../../components/Profile";
+import Carousel from "../../../../components/Carousel";
 
 const CRAG_SLUG = "stawamus-chief";
 export const dynamicParams = false;
@@ -45,7 +46,12 @@ export default async function RoutePage({ params }) {
   const reps = reportsFor(r.slug);
   const more = ROUTES.filter((x) => x.zone === r.zone && x.slug !== r.slug);
   const cragLine = routeForCragLine(r.slug);
-  const extraPhotos = ["start", "crux", "payoff", "detail"].filter((k) => r.photos[k]);
+  // Photo carousel: the five-shot set. Before launch, empty slots show the topo with "photo coming" so the layout reads.
+  const SHOT_TITLES = { hero: "The line", start: "The start", crux: "The crux", payoff: "The payoff", detail: "Detail" };
+  const shots = Object.keys(SHOT_TITLES).filter((k) => r.photos[k]);
+  const slides = shots.length
+    ? shots.map((k) => ({ title: SHOT_TITLES[k], node: <img src={r.photos[k]} alt={`${r.name}: ${SHOT_TITLES[k].toLowerCase()}`} loading="lazy" /> }))
+    : SITE_NOINDEX ? Object.keys(SHOT_TITLES).map((k, n) => ({ title: `${SHOT_TITLES[k]} · photo coming`, node: <span className="cph"><TopoTiles lat={r.lat} lng={r.lng} z={13 + (n % 2)} cols={7} rows={4} className="dim" /></span> })) : [];
   const url = `${SITE_URL}${routeHref(r)}`;
   const point = { lat: r.lat, lng: r.lng };
 
@@ -81,7 +87,7 @@ export default async function RoutePage({ params }) {
   } else {
     line = (<>
       <TopoMap mode="point" point={point} discipline={r.discipline} className="tall" />
-      <p className="caption">Our GPS track for this route is coming. The pin shows the general area.</p>
+      <p className="caption">Our GPS track for this route is coming; the pin shows where it is.</p>
     </>);
   }
 
@@ -112,23 +118,20 @@ export default async function RoutePage({ params }) {
               {r.products.map((p) => <a key={p.url} className="btn" href={p.url}>{p.name}</a>)}
             </div>
           </div>
-          <div className="profilecol">
-            {hasProfile(r) ? (<><h2 className="sectitle">Route Profile</h2><Profile r={r} /></>) : (<>
-              <h2 className="sectitle">Where It Is</h2>
-              <TopoMap mode="point" point={point} discipline={r.discipline} />
-              <p className="caption">{z.name} · <Link className="linkbtn" href={zoneHref(z)}>All {z.name} routes →</Link></p>
-              {BUILD_NOTES && <p className="flag"><b>Build note</b>Add profile_length, profile_fitness, profile_technical and profile_commitment (1–5) in the Sheet to show the Route Profile chart here.</p>}
-            </>)}
+          <div className="profilecol" id="line">
+            <h2 className="sectitle">The Line</h2>
+            {line}
+            <p className="caption">Lines are approximate. Your guide chooses the line on the day.</p>
+            {hasProfile(r) && (<><h2 className="sectitle" style={{ marginTop: 28 }}>Route Profile</h2><Profile r={r} /></>)}
           </div>
         </div>
 
         <div className="body">
           <div className="prose">
-            <section id="line"><p className="eyebrow">The line</p>{line}<p className="caption">Lines are approximate. Your guide chooses the line on the day.</p></section>
+            {slides.length > 0 && <div id="photos"><Carousel slides={slides} label={`${r.name} photos`} /></div>}
             <section id="overview"><p className="eyebrow">Overview</p><p className="lead">{r.overview}</p></section>
             {r.guide_quote && <blockquote className="quote">{r.guide_quote}<cite>{r.author}</cite></blockquote>}
             <section id="route"><p className="eyebrow">The route</p><p>{r.route_description}</p></section>
-            {extraPhotos.length > 0 && <div className="photos">{extraPhotos.map((k) => <img key={k} src={r.photos[k]} alt={`${r.name}: ${k}`} loading="lazy" />)}</div>}
             <section id="hazards"><p className="eyebrow">Hazards</p><p>{r.hazards}</p></section>
             <section id="skills"><p className="eyebrow">Skills you need</p><p>{r.skills}</p></section>
             <section id="reports"><p className="eyebrow">Trip reports</p>
@@ -158,7 +161,7 @@ export default async function RoutePage({ params }) {
 
       <nav className="routenav gut" aria-label="On this page">
         <div className="in">
-          <a href="#line">The Line</a><a href="#overview">Overview</a><a href="#hazards">Hazards</a><a href="#reports">Trip Reports</a>
+          <a href="#line">The Line</a><a href="#photos">Photos</a><a href="#overview">Overview</a><a href="#hazards">Hazards</a><a href="#reports">Trip Reports</a>
           <a className="primary" href="#guide">Go With A Guide</a>
         </div>
       </nav>
