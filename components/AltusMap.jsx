@@ -77,7 +77,8 @@ export default function AltusMap({ zones, routes, geometry = null, activeZone = 
   function padding(m) {
     const w = m.getContainer().clientWidth, h = m.getContainer().clientHeight, p = state.current.pad || {};
     const f = (v, d, size) => Math.round((v ?? d) * size);
-    return { top: f(p.top, 0.1, h), bottom: f(p.bottom, 0.25, h), left: f(p.left, w > 900 ? 0.3 : 0.05, w), right: f(p.right, 0.05, w) };
+    const phone = w <= 900;
+    return { top: phone ? Math.round(h * (state.current.activeZone ? 0.06 : 0.36)) : f(p.top, 0.1, h), bottom: phone ? Math.round(h * 0.3) : f(p.bottom, 0.25, h), left: phone ? 16 : f(p.left, 0.3, w), right: phone ? 16 : f(p.right, 0.05, w) };
   }
 
   function applyZone(instant) {
