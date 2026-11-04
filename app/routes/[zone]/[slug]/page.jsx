@@ -90,7 +90,7 @@ export default async function RoutePage({ params }) {
       <PageHead crumbs={[["Routes", "/routes"], [z.name, zoneHref(z)], [r.name, null]]} />
       <div className="gut"><main className="wrap routepage">
         <header className={`hero${r.photos.hero ? " hasphoto" : ""}`}>
-          {r.photos.hero ? <img className="heroimg" src={r.photos.hero} alt={r.name} /> : <TopoTiles lat={r.lat} lng={r.lng} z={12} cols={7} rows={3} className="dim" />}
+          {r.photos.hero ? <img className="heroimg" src={r.photos.hero} alt={r.name} /> : <TopoTiles lat={r.lat} lng={r.lng} z={12} cols={7} rows={3} className="dim" eager />}
           <div className="in">
             <p className="eyebrow">{DISC[r.discipline].label}{r.style ? ` · ${r.style}` : ""} · {z.name}</p>
             <h1 className="routetitle">{r.name}</h1>

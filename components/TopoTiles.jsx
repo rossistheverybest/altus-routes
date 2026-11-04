@@ -2,7 +2,7 @@
 // Used behind cards and the route hero until the route has its own photo.
 import { TOPO, AERIAL, tileFor, tileUrl, cachedTile } from "../lib/tiles";
 
-export default function TopoTiles({ lat, lng, z = 13, cols = 3, rows = 3, aerial = false, className = "" }) {
+export default function TopoTiles({ lat, lng, z = 13, cols = 3, rows = 3, aerial = false, className = "", eager = false }) {
   if (Number.isNaN(lat) || Number.isNaN(lng)) return null;
   const src = aerial ? AERIAL : TOPO;
   const t = tileFor(lat, lng, z);
@@ -14,7 +14,7 @@ export default function TopoTiles({ lat, lng, z = 13, cols = 3, rows = 3, aerial
   return (
     <span className={`tiles ${className}`} aria-hidden="true">
       <span className="tilegrid" style={{ width: cols * 256, gridTemplateColumns: `repeat(${cols},256px)`, transform: `translate(${-ox}px, ${-oy}px)` }}>
-        {tiles.map(([x, y]) => <img key={`${x}-${y}`} src={cachedTile(tileUrl(src, x, y, z))} alt="" loading="lazy" width="256" height="256" />)}
+        {tiles.map(([x, y]) => <img key={`${x}-${y}`} src={cachedTile(tileUrl(src, x, y, z))} alt="" loading={eager ? "eager" : "lazy"} width="256" height="256" />)}
       </span>
     </span>
   );

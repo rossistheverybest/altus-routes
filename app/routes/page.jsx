@@ -26,7 +26,7 @@ export default function Hub() {
               const by = Object.keys(DISC).map((k) => [k, rs.filter((r) => r.discipline === k).length]).filter((x) => x[1]);
               return (
                 <Link key={z.slug} className="zcard" href={zoneHref(z)}>
-                  <span className="ztopo"><TopoTiles lat={z.polygon.reduce((a, p) => a + p[0], 0) / z.polygon.length} lng={z.polygon.reduce((a, p) => a + p[1], 0) / z.polygon.length} z={10} cols={3} rows={2} className="dim" /></span>
+                  <span className="ztopo"><TopoTiles lat={z.polygon.reduce((a, p) => a + p[0], 0) / z.polygon.length} lng={z.polygon.reduce((a, p) => a + p[1], 0) / z.polygon.length} z={10} cols={3} rows={3} className="dim" /></span>
                   <span className="zn">{z.name}</span>
                   <span className="zc">{rs.length} route{rs.length === 1 ? "" : "s"} · {by.map(([k, n]) => `${n} ${DISC[k].label.toLowerCase()}`).join(", ")}</span>
                   <span className="zbar">{by.map(([k, n]) => <i key={k} style={{ flex: n, background: `var(${DISC[k].c})` }} />)}</span>
