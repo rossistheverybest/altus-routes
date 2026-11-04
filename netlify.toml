@@ -11,3 +11,8 @@
   NEXT_PUBLIC_BUILD_NOTES = "1"
 [context.branch-deploy.environment]
   NEXT_PUBLIC_BUILD_NOTES = "1"
+
+# Topo tiles used as card/hero backdrops are fetched once and cached by Netlify's image CDN,
+# so visitors don't each hit the free tile server.
+[images]
+  remote_images = ["https://tile\\.opentopomap\\.org/.*", "https://server\\.arcgisonline\\.com/.*"]
