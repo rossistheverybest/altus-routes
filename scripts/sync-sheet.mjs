@@ -35,6 +35,15 @@ async function load(tab, file) {
   return t;
 }
 
+// Google can export dates as 5/28/2012; the site wants 2012-05-28. Anything unreadable becomes blank.
+const isoDate = (s) => {
+  if (!s) return "";
+  if (/^\d{4}-\d{2}-\d{2}$/.test(s)) return s;
+  // A plain number is a spreadsheet date serial (days since 30 Dec 1899).
+  if (/^\d{5}(\.\d+)?$/.test(s)) return new Date(Date.UTC(1899, 11, 30) + Math.floor(+s) * 864e5).toISOString().slice(0, 10);
+  const d = new Date(s);
+  return Number.isNaN(d.getTime()) ? "" : d.toISOString().slice(0, 10);
+};
 const products = (s) => (s || "").split("\n").map((l) => l.split("|").map((x) => x.trim())).filter((p) => p[0] && p[1]).map(([name, url]) => ({ name, url }));
 
 async function main() {
@@ -52,7 +61,7 @@ async function main() {
     const lat = parseFloat(r.lat), lng = parseFloat(r.lng);
     if (Number.isNaN(lat) || Number.isNaN(lng)) { problems.push(`${r.slug}: missing lat/lng`); continue; }
     routes.push({
-      ...old, ...r, lat, lng, products: products(r.products),
+      ...old, ...r, lat, lng, products: products(r.products), last_updated: isoDate(r.last_updated),
       // Columns that may not exist in the sheet yet keep their current values.
       aspect: r.aspect ?? old.aspect ?? "", max_pitch: r.max_pitch ?? old.max_pitch ?? "", terrain: r.terrain ?? old.terrain ?? "",
     });
@@ -64,7 +73,8 @@ async function main() {
   try {
     const reps = parseCSV(await load("Trip Reports", opt("--reports")))
       .filter((x) => x.route && x.date && x.url && routes.some((r) => r.slug === x.route))
-      .map(({ route, date, title, url }) => ({ route, date, title, url }));
+      .map(({ route, date, title, url }) => ({ route, date: isoDate(date), title: title || "Trip report", url }))
+      .filter((x) => x.date);
     fs.writeFileSync("data/reports.json", JSON.stringify(reps, null, 1));
     console.log(`sync-sheet: ${reps.length} trip reports written`);
   } catch (e) { console.warn("sync-sheet: trip reports not updated:", e.message); }

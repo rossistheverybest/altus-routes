@@ -4,7 +4,7 @@
   "version": "0.1.0",
   "scripts": {
     "dev": "next dev",
-    "build": "node scripts/sync-sheet.mjs && next build",
+    "build": "node scripts/sync-sheet.mjs && next build || (echo \"BUILD WITH SHEET DATA FAILED - rebuilding with the saved data in /data. Check the Sheet.\" && git checkout -- data && next build)",
     "start": "next start",
     "sync": "node scripts/sync-sheet.mjs"
   },
