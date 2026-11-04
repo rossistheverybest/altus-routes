@@ -51,7 +51,7 @@ export default async function RoutePage({ params }) {
   const shots = Object.keys(SHOT_TITLES).filter((k) => r.photos[k]);
   const slides = shots.length
     ? shots.map((k) => ({ title: SHOT_TITLES[k], node: <img src={r.photos[k]} alt={`${r.name}: ${SHOT_TITLES[k].toLowerCase()}`} loading="lazy" /> }))
-    : SITE_NOINDEX ? Object.keys(SHOT_TITLES).map((k, n) => ({ title: `${SHOT_TITLES[k]} · photo coming`, node: <span className="cph"><TopoTiles lat={r.lat} lng={r.lng} z={13 + (n % 2)} cols={7} rows={4} className="dim" /></span> })) : [];
+    : SITE_NOINDEX ? Object.keys(SHOT_TITLES).map((k, n) => ({ title: `${SHOT_TITLES[k]} · photo coming`, node: <span className="cph"><TopoTiles lat={r.lat} lng={r.lng} z={13 + (n % 2)} cols={7} rows={4} className="dim" /><span className="cphl">Photo coming<small>{SHOT_TITLES[k]}</small></span></span> })) : [];
   const url = `${SITE_URL}${routeHref(r)}`;
   const point = { lat: r.lat, lng: r.lng };
 
@@ -82,7 +82,7 @@ export default async function RoutePage({ params }) {
   } else if (r.tracks) {
     line = (<>
       <TopoMap mode="lines" tracks={r.tracks} areas={r.areas} discipline={r.discipline} className="tall" />
-      <ol className="lines">{r.tracks.map((l, i) => <li key={i}><b>{i + 1}</b>{l.name}</li>)}</ol>
+      {r.tracks.length > 1 && <ol className="lines">{r.tracks.map((l, i) => <li key={i}><b>{i + 1}</b>{l.name}</li>)}</ol>}
     </>);
   } else {
     line = (<>
