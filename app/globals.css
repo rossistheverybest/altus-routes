@@ -236,7 +236,7 @@ h1{font-family:var(--f-head);font-weight:700;font-size:clamp(48px,8vw,112px);let
 
 /* map style preview */
 .mp{position:relative;height:calc(100vh - 110px);min-height:640px;margin:0 16px 16px;border-radius:12px;overflow:hidden;background:#1d1d1c}
-.altusmap{position:absolute;inset:0}
+.altusmap{position:absolute!important;inset:0;width:100%;height:100%}
 .mp-title{position:absolute;left:24px;top:24px;width:420px;max-width:calc(100% - 48px);background:rgba(25,25,25,.88);border:1px solid #2a2a2b;border-radius:10px;padding:20px;display:flex;flex-direction:column;gap:10px}
 .mp-title h1{font-size:48px;margin:0}
 .mp-title p{margin:0;font-size:16px}
