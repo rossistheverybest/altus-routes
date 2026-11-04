@@ -1,10 +1,8 @@
-import Link from "next/link";
-import { ZONES, ROUTES, CRAG, lite, liteZone } from "../../lib/data";
-import { DISC, zoneHref } from "../../lib/shared";
+import { ZONES, ROUTES, CRAG, GEOMETRY, lite, liteZone } from "../../lib/data";
 import { SITE_URL } from "../../lib/site";
-import { PageHead, JsonLd } from "../../components/Chrome";
-import HubClient from "../../components/HubClient";
-import TopoTiles from "../../components/TopoTiles";
+import { JsonLd } from "../../components/Chrome";
+import HubMap from "../../components/HubMap";
+import RouteList from "../../components/RouteList";
 
 const TITLE = "Sea to Sky Routes: Ski, Climb and Run from Vancouver to the Duffey | Altus";
 const DESC = "Route guides from Altus's IFMGA guides: ski tours, rock climbs, alpine summits and runs between Vancouver, Squamish, Whistler and the Duffey, with trip reports.";
@@ -12,31 +10,13 @@ const DESC = "Route guides from Altus's IFMGA guides: ski tours, rock climbs, al
 export const metadata = { title: TITLE, description: DESC, alternates: { canonical: "/routes" }, openGraph: { title: TITLE, description: DESC, url: "/routes" } };
 
 export default function Hub() {
+  const zones = ZONES.map(liteZone), routes = ROUTES.map(lite);
+  const crag = { zone: CRAG.zone, name: CRAG.name, photo: CRAG.photo, count: CRAG.lines.length };
   return (
     <>
-      <PageHead crumbs={[["Routes", null]]} title="Sea to Sky Routes"
-        lede="Ski tours, rock climbs, alpine summits and mountain runs between Vancouver and the Duffey Lake Road, written by our guides, with our own trip reports and the guided option for each." />
-      <div className="gut"><main className="wrap">
-        <section className="zones-sec">
-          <p className="eyebrow">Vancouver to the Duffey</p>
-          <h2 className="sechead">Seven Zones</h2>
-          <div className="zgrid">
-            {ZONES.map((z) => {
-              const rs = ROUTES.filter((r) => r.zone === z.slug);
-              const by = Object.keys(DISC).map((k) => [k, rs.filter((r) => r.discipline === k).length]).filter((x) => x[1]);
-              return (
-                <Link key={z.slug} className="zcard" href={zoneHref(z)}>
-                  <span className="ztopo"><TopoTiles lat={z.polygon.reduce((a, p) => a + p[0], 0) / z.polygon.length} lng={z.polygon.reduce((a, p) => a + p[1], 0) / z.polygon.length} z={10} cols={3} rows={3} className="dim" /></span>
-                  <span className="zn">{z.name}</span>
-                  <span className="zc">{rs.length} route{rs.length === 1 ? "" : "s"} · {by.map(([k, n]) => `${n} ${DISC[k].label.toLowerCase()}`).join(", ")}</span>
-                  <span className="zbar">{by.map(([k, n]) => <i key={k} style={{ flex: n, background: `var(${DISC[k].c})` }} />)}</span>
-                </Link>
-              );
-            })}
-          </div>
-        </section>
-        <HubClient zones={ZONES.map(liteZone)} routes={ROUTES.map(lite)} crag={{ zone: CRAG.zone, name: CRAG.name, photo: CRAG.photo, count: CRAG.lines.length }} />
-      </main></div>
+      <HubMap zones={zones} routes={routes} geometry={GEOMETRY}>
+        <RouteList zones={zones} routes={routes} crag={crag} />
+      </HubMap>
       <JsonLd data={{
         "@context": "https://schema.org", "@type": "CollectionPage", name: "Sea to Sky Routes", description: DESC, url: `${SITE_URL}/routes`,
         publisher: { "@type": "Organization", name: "Altus Mountain Guides", url: "https://altusmountainguides.com" },
