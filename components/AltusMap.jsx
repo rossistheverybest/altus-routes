@@ -46,7 +46,7 @@ export default function AltusMap({ palette = "muted", zones, routes, activeZone 
         map.addLayer({ id: "zone-line", type: "line", source: "zones", paint: { "line-color": ["case", ["==", ["get", "slug"], ""], GOLD, "#C79A6B"], "line-width": ["case", ["==", ["get", "slug"], ""], 3, 1.4], "line-dasharray": [3, 2] } });
         map.addLayer({ id: "count-bg", type: "circle", source: "counts", maxzoom: 10.5, paint: { "circle-radius": ["interpolate", ["linear"], ["get", "count"], 1, 16, 17, 26], "circle-color": "#000", "circle-stroke-color": "#E0C3A4", "circle-stroke-width": 2 } });
         map.addLayer({ id: "count-label", type: "symbol", source: "counts", maxzoom: 10.5, layout: { "text-field": ["to-string", ["get", "count"]], "text-font": ["Noto Sans Bold"], "text-size": 14, "text-allow-overlap": true }, paint: { "text-color": "#fff" } });
-        map.addLayer({ id: "pins", type: "circle", source: "pins", minzoom: 10.5, paint: { "circle-radius": 7, "circle-color": ["get", "color"], "circle-stroke-color": "#000", "circle-stroke-width": 2 } });
+        map.addLayer({ id: "pins", type: "circle", source: "pins", minzoom: 9, paint: { "circle-radius": 7, "circle-color": ["get", "color"], "circle-stroke-color": "#000", "circle-stroke-width": 2 } });
         map.on("click", "pins", (e) => { const f = e.features?.[0]; if (f) cb.current.onRoute?.(f.properties); });
         map.on("click", "zone-fill", (e) => { const f = e.features?.[0]; if (f) cb.current.onZone?.(f.properties.slug); });
         map.on("click", "count-bg", (e) => { const f = e.features?.[0]; if (f) cb.current.onZone?.(f.properties.slug); });
@@ -73,7 +73,13 @@ export default function AltusMap({ palette = "muted", zones, routes, activeZone 
       m.setPaintProperty("zone-line", "line-width", ["case", ["==", ["get", "slug"], activeZone || ""], 3, 1.4]);
       const pts = z ? z.polygon : zones_.flatMap((x) => x.polygon);
       const lngs = pts.map((p) => p[1]), lats = pts.map((p) => p[0]);
-      m.fitBounds([[Math.min(...lngs), Math.min(...lats)], [Math.max(...lngs), Math.max(...lats)]], { padding: { top: 150, bottom: 230, left: 520, right: 90 }, duration: 900 });
+      const w = m.getContainer().clientWidth, h = m.getContainer().clientHeight;
+      const pad = { top: Math.round(h * 0.12), bottom: Math.round(h * 0.26), left: w > 900 ? Math.round(w * 0.36) : 30, right: Math.round(w * 0.06) };
+      m.fitBounds([[Math.min(...lngs), Math.min(...lats)], [Math.max(...lngs), Math.max(...lats)]], { padding: pad, duration: 900 });
+      m.setLayoutProperty("count-bg", "visibility", activeZone ? "none" : "visible");
+      m.setLayoutProperty("count-label", "visibility", activeZone ? "none" : "visible");
+      m.setFilter("pins", activeZone ? ["==", ["get", "zone"], activeZone] : null);
+      m.setLayerZoomRange("pins", activeZone ? 0 : 10.5, 24);
     };
     go();
     return () => clearTimeout(t);
