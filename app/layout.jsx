@@ -1,3 +1,4 @@
+import "leaflet/dist/leaflet.css";
 import "./globals.css";
 import { SiteHeader, SiteFooter } from "../components/Chrome";
 import { SITE_URL, SITE_NOINDEX } from "../lib/site";
@@ -10,7 +11,7 @@ export const metadata = {
   openGraph: { siteName: "Altus Mountain Guides", locale: "en_CA", type: "website" },
 };
 
-export const viewport = { themeColor: "#000000" };
+export const viewport = { themeColor: "#191919" };
 
 export default function RootLayout({ children }) {
   return (
@@ -18,7 +19,8 @@ export default function RootLayout({ children }) {
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Rajdhani:wght@500;600;700&display=swap" />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Mozilla+Headline:wdth,wght@75..100,200..700&display=swap" />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@200..700&display=swap" />
       </head>
       <body>
         <SiteHeader />

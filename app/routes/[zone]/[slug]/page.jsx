@@ -1,14 +1,15 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ZONES, ROUTES, CRAG, zoneBy, routeBy, reportsFor, routeForCragLine, lite, liteZone } from "../../../../lib/data";
+import { ROUTES, CRAG, zoneBy, routeBy, reportsFor, routeForCragLine, lite } from "../../../../lib/data";
 import { DISC, unit, routeHref, zoneHref } from "../../../../lib/shared";
 import { SITE_URL, BUILD_NOTES, INDEXABLE_STATUSES } from "../../../../lib/site";
-import { mapSVG } from "../../../../lib/map";
 import { cragSVG } from "../../../../lib/crag";
 import { PageHead, JsonLd } from "../../../../components/Chrome";
 import Card from "../../../../components/Card";
-import Hoverable from "../../../../components/Hoverable";
 import CragPage from "../../../../components/CragPage";
+import TopoMap from "../../../../components/TopoMap";
+import TopoTiles from "../../../../components/TopoTiles";
+import Profile, { hasProfile } from "../../../../components/Profile";
 
 const CRAG_SLUG = "stawamus-chief";
 export const dynamicParams = false;
@@ -36,8 +37,6 @@ export async function generateMetadata({ params }) {
   };
 }
 
-function Stat({ label, value }) { return value ? <div className="stat"><dt>{label}</dt><dd>{value}</dd></div> : null; }
-
 export default async function RoutePage({ params }) {
   const { zone, slug } = await params;
   if (slug === CRAG_SLUG && zone === CRAG.zone) return <CragPage />;
@@ -46,9 +45,23 @@ export default async function RoutePage({ params }) {
   const reps = reportsFor(r.slug);
   const more = ROUTES.filter((x) => x.zone === r.zone && x.slug !== r.slug);
   const cragLine = routeForCragLine(r.slug);
-  const zonesLite = ZONES.map(liteZone);
   const extraPhotos = ["start", "crux", "payoff", "detail"].filter((k) => r.photos[k]);
   const url = `${SITE_URL}${routeHref(r)}`;
+  const point = { lat: r.lat, lng: r.lng };
+
+  const facts = [
+    [r.discipline === "ski" ? "Vertical" : "Elevation gain", unit(r.gain_m, "m")],
+    ["High point", unit(r.high_point_m, "m")],
+    ["Distance", unit(r.distance_km, "km")],
+    ["Time", r.time],
+    ["Grade", r.grade],
+    ["Ability", r.level],
+    ["Aspect", r.aspect],
+    ["Max pitch", r.max_pitch],
+    ["Terrain", r.terrain],
+    ["ATES", r.ates],
+    ["Season", r.season],
+  ].filter(([, v]) => v);
 
   let line;
   if (cragLine && cragLine.pts.length) {
@@ -61,83 +74,95 @@ export default async function RoutePage({ params }) {
       <p className="caption"><Link className="linkbtn" href={`/routes/${CRAG.zone}/${CRAG_SLUG}`}>See all climbs on the Chief →</Link></p>
     </>);
   } else if (r.tracks) {
-    line = (<Hoverable>
-      <div dangerouslySetInnerHTML={{ __html: mapSVG({ zones: zonesLite, focus: r, mini: true, tracks: r.tracks, className: "runmap" }) }} />
-      <ol className="lines">{r.tracks.map((l, i) => <li key={i} data-line={i}><b>{i + 1}</b>{l.name}</li>)}</ol>
-    </Hoverable>);
+    line = (<>
+      <TopoMap mode="lines" tracks={r.tracks} discipline={r.discipline} className="tall" />
+      <ol className="lines">{r.tracks.map((l, i) => <li key={i}><b>{i + 1}</b>{l.name}</li>)}</ol>
+    </>);
   } else {
-    line = <div className="lineslot">Line diagram coming: a photo of the line, or our own GPS track.</div>;
+    line = (<>
+      <TopoMap mode="point" point={point} discipline={r.discipline} className="tall" />
+      <p className="caption">Our GPS track for this route is coming. The pin shows the general area.</p>
+    </>);
   }
 
   return (
     <>
       <PageHead crumbs={[["Routes", "/routes"], [z.name, zoneHref(z)], [r.name, null]]} />
-      <div className="gut"><main className="wrap">
-        <article className="route">
-          <div className={`hero${r.photos.hero ? " hasphoto" : ""}`}>
-            {r.photos.hero && <img className="heroimg" src={r.photos.hero} alt={r.name} />}
-            <div className="in">
-              <div className="tags"><span className="tag">{DISC[r.discipline].label}</span>{r.style && <span className="tag">{r.style}</span>}</div>
-              <h1 className="routetitle">{r.name}</h1>
-              <p className="sum">{r.summary}</p>
+      <div className="gut"><main className="wrap routepage">
+        <header className={`hero${r.photos.hero ? " hasphoto" : ""}`}>
+          {r.photos.hero ? <img className="heroimg" src={r.photos.hero} alt={r.name} /> : <TopoTiles lat={r.lat} lng={r.lng} z={12} cols={7} rows={3} className="dim" />}
+          <div className="in">
+            <p className="eyebrow">{DISC[r.discipline].label}{r.style ? ` · ${r.style}` : ""} · {z.name}</p>
+            <h1 className="routetitle">{r.name}</h1>
+            <p className="sum">{r.summary}</p>
+          </div>
+        </header>
+
+        {BUILD_NOTES && r.verify && <div className="flag"><b>Draft · verify ({r.status})</b>{r.verify}</div>}
+
+        <div className="duo">
+          <div className="factcol">
+            <section className="factcard" aria-labelledby="facts">
+              <h2 id="facts" className="cardtitle">Route Facts</h2>
+              <dl className="facts">{facts.map(([k, v]) => <div key={k}><dt>{k}</dt><dd>{v}</dd></div>)}</dl>
+            </section>
+            <div className="guide" id="guide">
+              <p className="eyebrow">Go with a guide</p>
+              <p>{r.go_guided}</p>
+              {r.products.map((p) => <a key={p.url} className="btn" href={p.url}>{p.name}</a>)}
             </div>
           </div>
-          <dl className="stats" style={{ margin: 0 }}>
-            <Stat label={r.discipline === "ski" ? "Vertical" : "Elevation gain"} value={unit(r.gain_m, "m")} />
-            <Stat label="Top" value={unit(r.high_point_m, "m")} />
-            <Stat label="Aspect" value={r.aspect} />
-            <Stat label="Max pitch" value={r.max_pitch} />
-            <Stat label="Terrain" value={r.terrain} />
-            <Stat label="Grade" value={r.grade} />
-            <Stat label="Distance" value={unit(r.distance_km, "km")} />
-            <Stat label="Time" value={r.time} />
-          </dl>
-          <div className="body">
-            <div className="prose">
-              {BUILD_NOTES && r.verify && <div className="flag"><b>Draft · verify ({r.status})</b>{r.verify}</div>}
-              <section><h2 className="h3">The line</h2>{line}<p className="caption">Lines are approximate. Your guide chooses the line on the day.</p></section>
-              <section><h2 className="h3">Overview</h2><p>{r.overview}</p></section>
-              {r.guide_quote && <blockquote className="quote">{r.guide_quote}<cite>{r.author}</cite></blockquote>}
-              <section><h2 className="h3">The route</h2><p>{r.route_description}</p></section>
-              {extraPhotos.length > 0 && <div className="photos">{extraPhotos.map((k) => <img key={k} src={r.photos[k]} alt={`${r.name}: ${k}`} loading="lazy" />)}</div>}
-              <section><h2 className="h3">Hazards</h2><p>{r.hazards}</p></section>
-              <section><h2 className="h3">Skills you need</h2><p>{r.skills}</p></section>
-              <section><h2 className="h3">Trip reports</h2>
-                {reps.length
-                  ? <ul className="reports">{reps.map((x) => <li key={x.url}><time dateTime={x.date}>{x.date}</time><a href={x.url}>{x.title}</a></li>)}</ul>
-                  : <p className="muted">No trip reports yet.</p>}
-              </section>
-            </div>
-            <aside className="side">
-              <div className="guide">
-                <h2 className="h3">Go with a guide</h2>
-                <p>{r.go_guided}</p>
-                {r.products.map((p) => <a key={p.url} href={p.url}>{p.name} →</a>)}
-              </div>
-              <dl className="details">
-                <dt>Ability</dt><dd>{r.level}</dd>
-                <dt>Best when</dt><dd>{r.season}</dd>
-                <dt>Zone</dt><dd><Link href={zoneHref(z)}>{z.name}</Link></dd>
-                <dt>Access</dt><dd>{r.access}</dd>
-                {r.ates && <><dt>ATES</dt><dd>{r.ates}</dd></>}
-              </dl>
-              <div>
-                <h2 className="h3">Where it is</h2>
-                <div dangerouslySetInnerHTML={{ __html: mapSVG({ zones: zonesLite, focus: r, mini: true }) }} />
-                <p className="caption">{r.name} · <Link className="linkbtn" href={zoneHref(z)}>Full map →</Link></p>
-              </div>
-              <div><h2 className="h3">Before you go</h2><p className="muted" style={{ margin: 0 }}>Check the avalanche forecast at <a href="https://avalanche.ca">avalanche.ca</a> and the BC Parks page for closures and permits on the day you go.</p></div>
-            </aside>
+          <div className="profilecol">
+            {hasProfile(r) ? (<><h2 className="sectitle">Route Profile</h2><Profile r={r} /></>) : (<>
+              <h2 className="sectitle">Where It Is</h2>
+              <TopoMap mode="point" point={point} discipline={r.discipline} />
+              <p className="caption">{z.name} · <Link className="linkbtn" href={zoneHref(z)}>All {z.name} routes →</Link></p>
+              {BUILD_NOTES && <p className="flag"><b>Build note</b>Add profile_length, profile_fitness, profile_technical and profile_commitment (1–5) in the Sheet to show the Route Profile chart here.</p>}
+            </>)}
           </div>
-          <p className="disclaimer">Your guide chooses the objective and the line on the day based on conditions, weather and the group. Route descriptions are general information, not instructions.{r.last_updated ? ` Last updated ${fmtDate(r.last_updated)}.` : ""}</p>
-          {more.length > 0 && (
-            <div className="more">
-              <div className="morehead"><h2 className="h3">More from {z.name}</h2><Link className="linkbtn" href="/routes">All routes →</Link></div>
-              <div className="cards">{more.map((m) => <Card key={m.slug} r={lite(m)} zoneName={z.name} />)}</div>
-            </div>
-          )}
-        </article>
+        </div>
+
+        <div className="body">
+          <div className="prose">
+            <section id="line"><p className="eyebrow">The line</p>{line}<p className="caption">Lines are approximate. Your guide chooses the line on the day.</p></section>
+            <section id="overview"><p className="eyebrow">Overview</p><p className="lead">{r.overview}</p></section>
+            {r.guide_quote && <blockquote className="quote">{r.guide_quote}<cite>{r.author}</cite></blockquote>}
+            <section id="route"><p className="eyebrow">The route</p><p>{r.route_description}</p></section>
+            {extraPhotos.length > 0 && <div className="photos">{extraPhotos.map((k) => <img key={k} src={r.photos[k]} alt={`${r.name}: ${k}`} loading="lazy" />)}</div>}
+            <section id="hazards"><p className="eyebrow">Hazards</p><p>{r.hazards}</p></section>
+            <section id="skills"><p className="eyebrow">Skills you need</p><p>{r.skills}</p></section>
+            <section id="reports"><p className="eyebrow">Trip reports</p>
+              {reps.length
+                ? <ul className="reports">{reps.map((x) => <li key={x.url}><time dateTime={x.date}>{x.date}</time><a href={x.url}>{x.title}</a></li>)}</ul>
+                : <p className="muted">No trip reports yet.</p>}
+            </section>
+          </div>
+          <aside className="side">
+            <dl className="details">
+              <dt>Access</dt><dd>{r.access}</dd>
+              <dt>Zone</dt><dd><Link href={zoneHref(z)}>{z.name}</Link></dd>
+              <dt>Before you go</dt><dd>Check the avalanche forecast at <a href="https://avalanche.ca">avalanche.ca</a> and BC Parks for closures and permits on the day.</dd>
+            </dl>
+          </aside>
+        </div>
+
+        <p className="disclaimer">Your guide chooses the objective and the line on the day based on conditions, weather and the group. Route descriptions are general information, not instructions.{r.last_updated ? ` Last updated ${fmtDate(r.last_updated)}.` : ""}</p>
+
+        {more.length > 0 && (
+          <section className="more">
+            <div className="morehead"><h2 className="sectitle">More From {z.name}</h2><Link className="linkbtn" href="/routes">All routes →</Link></div>
+            <div className="cards">{more.map((m) => <Card key={m.slug} r={lite(m)} zoneName={z.name} />)}</div>
+          </section>
+        )}
       </main></div>
+
+      <nav className="routenav gut" aria-label="On this page">
+        <div className="in">
+          <a href="#line">The Line</a><a href="#overview">Overview</a><a href="#hazards">Hazards</a><a href="#reports">Trip Reports</a>
+          <a className="primary" href="#guide">Go With A Guide</a>
+        </div>
+      </nav>
+
       <JsonLd data={[
         { "@context": "https://schema.org", "@type": "Article", headline: `${r.name}: ${DISC[r.discipline].kind} route guide`, description: r.summary, url,
           author: { "@type": "Person", name: r.author || "Ross Berg" }, dateModified: r.last_updated || undefined,

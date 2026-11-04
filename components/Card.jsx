@@ -1,18 +1,18 @@
 "use client";
 import Link from "next/link";
 import { DISC, routeHref, cardStats } from "../lib/shared";
-import Topo from "./Topo";
+import TopoTiles from "./TopoTiles";
 
-export default function Card({ r, zoneName, onHover }) {
+export default function Card({ r, zoneName, onHover, hl }) {
   return (
     <Link
-      className="card" href={routeHref(r)} data-route={r.slug}
+      className={`card${hl ? " hl" : ""}`} href={routeHref(r)} data-route={r.slug}
       onMouseEnter={onHover ? () => onHover(r.slug) : undefined}
       onMouseLeave={onHover ? () => onHover(null) : undefined}
     >
       <span className="cimg">
-        {r.hero ? <img src={r.hero} alt="" loading="lazy" /> : <Topo seed={r.slug} alpha={0.28} />}
-        <span className="ctag">{DISC[r.discipline].label}</span>
+        {r.hero ? <img className="photo" src={r.hero} alt="" loading="lazy" /> : <TopoTiles lat={r.lat} lng={r.lng} z={13} cols={3} rows={3} className="dim" />}
+        <span className="ctag"><i className="dot" style={{ background: `var(${DISC[r.discipline].c})` }} />{DISC[r.discipline].label}</span>
         {r.reportCount > 0 && <span className="crep">{r.reportCount} report{r.reportCount > 1 ? "s" : ""}</span>}
       </span>
       <span className="cbody">

@@ -5,14 +5,16 @@ export function SiteHeader() {
   return (
     <header className="site gut">
       <div className="in">
-        <a href={MAIN} aria-label="Altus Mountain Guides home"><img src="/altus-logo.png" alt="Altus Mountain Guides" /></a>
         <nav aria-label="Main">
           {NAV.map((n) => n.on
-            ? <Link key={n.label} href={n.href} className="on" aria-current="page">{n.label}</Link>
-            : <a key={n.label} href={n.href}>{n.label}</a>)}
+            ? <Link key={n.label} href={n.href} className="navbtn on" aria-current="page">{n.label}</Link>
+            : <a key={n.label} href={n.href} className="navbtn">{n.label}</a>)}
         </nav>
-        <a className="book" href={BOOK_URL}>Book now</a>
-        <a className="burger" href={MAIN} aria-label="Menu"><i /><i /><i /></a>
+        <a className="logo" href={MAIN} aria-label="Altus Mountain Guides home"><img src="/altus-logo.png" alt="Altus Mountain Guides" /></a>
+        <div className="right">
+          <a className="book" href={BOOK_URL}>Book Now</a>
+          <a className="burger" href={MAIN} aria-label="Menu"><i /><i /><i /></a>
+        </div>
       </div>
     </header>
   );

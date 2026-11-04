@@ -9,6 +9,7 @@
     "sync": "node scripts/sync-sheet.mjs"
   },
   "dependencies": {
+    "leaflet": "^1.9.4",
     "next": "^15.5.29",
     "react": "^19.1.10",
     "react-dom": "^19.1.10"
