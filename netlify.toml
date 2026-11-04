@@ -1,0 +1,13 @@
+[build]
+  command = "npm run build"
+  publish = ".next"
+
+[build.environment]
+  NODE_VERSION = "22"
+  NEXT_TELEMETRY_DISABLED = "1"
+
+# Preview builds (deploy previews and branch deploys) show the draft notes and the Chief tracing tool.
+[context.deploy-preview.environment]
+  NEXT_PUBLIC_BUILD_NOTES = "1"
+[context.branch-deploy.environment]
+  NEXT_PUBLIC_BUILD_NOTES = "1"

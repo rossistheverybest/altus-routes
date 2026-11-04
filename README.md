@@ -1,7 +1,7 @@
 # Altus Route Hub (Sea to Sky)
 
 Route pages for altusmountainguides.com: ski tours, climbs, alpine routes and runs from Vancouver to the Duffey.
-Built with Next.js and hosted on Vercel. Every page is pre-built HTML, so Google and AI search can read it in full.
+Built with Next.js and hosted on Netlify. Every page is pre-built HTML, so Google and AI search can read it in full.
 
 ## Pages
 
@@ -39,28 +39,32 @@ spearhead-traverse-detail.jpg
 
 They appear automatically on the next build. Landscape, about 2400 px wide, under 500 KB each. Altus's own photos only.
 
-## Settings (Vercel > Project > Settings > Environment Variables)
+## Settings (Netlify > Site configuration > Environment variables)
 
 | Variable | Production | Preview | What it does |
 | --- | --- | --- | --- |
 | `SHEET_ID` | `1sbRTelw39y2WUwFOAZbVsgFR3wgg7EMOjp-7xzW377M` | same | Which Sheet to pull from. The Sheet must be shared "Anyone with the link: Viewer". |
 | `SITE_URL` | `https://altusmountainguides.com` | same | Used for canonical links and the sitemap |
 | `SITE_NOINDEX` | `1` until launch, then `0` | `1` | Keeps the whole site out of Google |
-| `NEXT_PUBLIC_BUILD_NOTES` | leave unset | `1` | Shows "Draft · verify" notes and the Chief line-tracing tool |
+| `NEXT_PUBLIC_BUILD_NOTES` | leave unset | set automatically by `netlify.toml` | Shows "Draft · verify" notes and the Chief line-tracing tool |
 
 Header and footer links are in `lib/site.js`. Check they match the main site.
+
+## First deploy on Netlify
+
+Add new site > Import an existing project > GitHub > `altus-routes`. Netlify reads `netlify.toml` and adds its Next.js runtime automatically. Add the settings above, then Deploy.
 
 ## Run it on a computer
 
 ```
 npm install
 npm run dev        # http://localhost:3000/routes
-npm run build      # what Vercel runs
+npm run build      # what Netlify runs
 ```
 
 ## Putting it under altusmountainguides.com/routes
 
 The main site stays on WordPress. Two ways to serve this hub at `/routes`:
 
-1. **Subdomain first (quick):** in Vercel add the domain `routes.altusmountainguides.com` and add the DNS record it shows. The hub works at `routes.altusmountainguides.com/routes`.
-2. **Same address as the main site (better for search):** a proxy in front of the main site sends `/routes*`, `/_next*`, `/photos*` and `/altus-logo.png` to Vercel. That's done with Cloudflare (a Worker or Origin Rule) or a reverse-proxy rule on the web host. It needs whoever manages DNS and hosting.
+1. **Subdomain first (quick):** in Netlify > Domain management add `routes.altusmountainguides.com` and add the DNS record it shows. The hub works at `routes.altusmountainguides.com/routes`.
+2. **Same address as the main site (better for search):** a proxy in front of the main site sends `/routes*`, `/_next*`, `/photos*` and `/altus-logo.png` to the Netlify site. That's done with Cloudflare (a Worker or Origin Rule) or a reverse-proxy rule on the web host. It needs whoever manages DNS and hosting.
