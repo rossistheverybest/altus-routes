@@ -10,7 +10,7 @@ import { TOPO, AERIAL } from "../lib/tiles";
 const COL = { ski: "#5AA9E6", rock: "#E8894A", alpine: "#B39BE3", run: "#6CCB8F" };
 const GOLD = "#FCB124";
 
-export default function TopoMap({ mode = "corridor", zones = [], routes = [], activeZone = null, visible = null, hover = null, onHover, tracks = null, point = null, discipline = "ski", height, className = "" }) {
+export default function TopoMap({ mode = "corridor", zones = [], routes = [], activeZone = null, visible = null, hover = null, onHover, tracks = null, areas = null, point = null, discipline = "ski", height, className = "" }) {
   const el = useRef(null);
   const map = useRef(null);
   const layers = useRef({});
@@ -55,6 +55,7 @@ export default function TopoMap({ mode = "corridor", zones = [], routes = [], ac
       }
       if (mode === "lines" && tracks) {
         const all = [];
+        (areas || []).forEach((a) => { all.push(...a.coords); L.polygon(a.coords, { color: COL[discipline] || GOLD, weight: 2, dashArray: "6 4", fillOpacity: 0.12 }).addTo(m); });
         layers.current.lines = tracks.map((l, i) => {
           all.push(...l.coords);
           const g = L.layerGroup().addTo(m);

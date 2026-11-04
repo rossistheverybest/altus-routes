@@ -255,3 +255,5 @@ h1{font-family:var(--f-head);font-weight:700;font-size:clamp(48px,8vw,112px);let
 .mp-card .x{position:absolute;top:6px;right:8px;background:none;border:0;font-size:22px;cursor:pointer}
 .maplibregl-ctrl-group{background:#191919!important;border:1px solid #3a3a3c}
 .maplibregl-ctrl-group button span{filter:invert(1)}
+.mp-legend{display:flex;gap:14px;flex-wrap:wrap;font-family:var(--f-head);font-weight:300;font-size:13px;letter-spacing:1px;text-transform:uppercase}
+.mp-legend span{display:inline-flex;align-items:center;gap:6px}.mp-legend i{width:10px;height:10px;border-radius:50%;display:inline-block}

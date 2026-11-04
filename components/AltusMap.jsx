@@ -9,7 +9,7 @@ const GOLD = "#FFBF00";
 
 const ring = (poly) => { const r = poly.map(([lat, lng]) => [lng, lat]); r.push(r[0]); return r; };
 
-export default function AltusMap({ palette = "muted", zones, routes, activeZone = null, onRoute, onZone, dim = 0.45 }) {
+export default function AltusMap({ palette = "muted", zones, routes, geometry = null, activeZone = null, onRoute, onZone, dim = 0.45 }) {
   const el = useRef(null);
   const mapRef = useRef(null);
   const cb = useRef({ onRoute, onZone }); cb.current = { onRoute, onZone };
@@ -46,11 +46,21 @@ export default function AltusMap({ palette = "muted", zones, routes, activeZone 
         map.addLayer({ id: "zone-line", type: "line", source: "zones", paint: { "line-color": ["case", ["==", ["get", "slug"], ""], GOLD, "#C79A6B"], "line-width": ["case", ["==", ["get", "slug"], ""], 3, 1.4], "line-dasharray": [3, 2] } });
         map.addLayer({ id: "count-bg", type: "circle", source: "counts", maxzoom: 10.5, paint: { "circle-radius": ["interpolate", ["linear"], ["get", "count"], 1, 16, 17, 26], "circle-color": "#000", "circle-stroke-color": "#E0C3A4", "circle-stroke-width": 2 } });
         map.addLayer({ id: "count-label", type: "symbol", source: "counts", maxzoom: 10.5, layout: { "text-field": ["to-string", ["get", "count"]], "text-font": ["Noto Sans Bold"], "text-size": 14, "text-allow-overlap": true }, paint: { "text-color": "#fff" } });
+        // Route shapes: ski areas (polygons) and lines (climbs, runs, ski lines), coloured by discipline.
+        const disc = Object.fromEntries(routes.map((r) => [r.slug, r]));
+        const geoFC = { type: "FeatureCollection", features: (geometry?.features || []).filter((f) => disc[f.properties.slug]).map((f) => ({ ...f, properties: { ...f.properties, zone: disc[f.properties.slug].zone, route: disc[f.properties.slug].name, color: COL[disc[f.properties.slug].discipline] } })) };
+        map.addSource("geo", { type: "geojson", data: geoFC });
+        map.addLayer({ id: "geo-area-fill", type: "fill", source: "geo", minzoom: 9, filter: ["==", ["get", "kind"], "area"], paint: { "fill-color": ["get", "color"], "fill-opacity": 0.16 } });
+        map.addLayer({ id: "geo-area-line", type: "line", source: "geo", minzoom: 9, filter: ["==", ["get", "kind"], "area"], paint: { "line-color": ["get", "color"], "line-width": 2, "line-dasharray": [2, 1.5] } });
+        map.addLayer({ id: "geo-line-case", type: "line", source: "geo", minzoom: 9.5, filter: ["==", ["get", "kind"], "line"], layout: { "line-cap": "round", "line-join": "round" }, paint: { "line-color": "#1d1d1c", "line-opacity": 0.55, "line-width": ["interpolate", ["linear"], ["zoom"], 10, 3, 14, 7] } });
+        map.addLayer({ id: "geo-line", type: "line", source: "geo", minzoom: 9.5, filter: ["==", ["get", "kind"], "line"], layout: { "line-cap": "round", "line-join": "round" }, paint: { "line-color": ["get", "color"], "line-width": ["interpolate", ["linear"], ["zoom"], 10, 1.6, 14, 4] } });
+        map.addLayer({ id: "geo-line-label", type: "symbol", source: "geo", minzoom: 12.5, filter: ["all", ["==", ["get", "kind"], "line"], ["!=", ["get", "name"], ""]], layout: { "symbol-placement": "line", "text-field": ["get", "name"], "text-font": ["Noto Sans Bold"], "text-size": 11 }, paint: { "text-color": "#1d1d1c", "text-halo-color": "#ffffff", "text-halo-width": 1.4 } });
+        ["geo-area-fill", "geo-line"].forEach((l) => map.on("click", l, (e) => { const f = e.features?.[0]; if (f) cb.current.onRoute?.({ slug: f.properties.slug, line: f.properties.name }); }));
         map.addLayer({ id: "pins", type: "circle", source: "pins", minzoom: 9, paint: { "circle-radius": 7, "circle-color": ["get", "color"], "circle-stroke-color": "#000", "circle-stroke-width": 2 } });
         map.on("click", "pins", (e) => { const f = e.features?.[0]; if (f) cb.current.onRoute?.(f.properties); });
         map.on("click", "zone-fill", (e) => { const f = e.features?.[0]; if (f) cb.current.onZone?.(f.properties.slug); });
         map.on("click", "count-bg", (e) => { const f = e.features?.[0]; if (f) cb.current.onZone?.(f.properties.slug); });
-        ["pins", "zone-fill", "count-bg"].forEach((l) => { map.on("mouseenter", l, () => (map.getCanvas().style.cursor = "pointer")); map.on("mouseleave", l, () => (map.getCanvas().style.cursor = "")); });
+        ["pins", "zone-fill", "count-bg", "geo-line", "geo-area-fill"].forEach((l) => { map.on("mouseenter", l, () => (map.getCanvas().style.cursor = "pointer")); map.on("mouseleave", l, () => (map.getCanvas().style.cursor = "")); });
         map.__ready = true;
       });
     })();

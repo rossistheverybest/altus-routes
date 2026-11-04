@@ -75,7 +75,7 @@ export default async function RoutePage({ params }) {
     </>);
   } else if (r.tracks) {
     line = (<>
-      <TopoMap mode="lines" tracks={r.tracks} discipline={r.discipline} className="tall" />
+      <TopoMap mode="lines" tracks={r.tracks} areas={r.areas} discipline={r.discipline} className="tall" />
       <ol className="lines">{r.tracks.map((l, i) => <li key={i}><b>{i + 1}</b>{l.name}</li>)}</ol>
     </>);
   } else {

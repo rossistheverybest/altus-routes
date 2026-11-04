@@ -5,27 +5,25 @@ import Link from "next/link";
 import AltusMap from "./AltusMap";
 import { routeHref } from "../lib/shared";
 
-export default function MapPreview({ zones, routes }) {
-  const [palette, setPalette] = useState("muted");
+export default function MapPreview({ zones, routes, geometry }) {
+  const palette = "muted";
   const [zone, setZone] = useState(null);
   const [route, setRoute] = useState(null);
   const count = (slug) => routes.filter((r) => !slug || r.zone === slug).length;
   return (
     <div className="mp">
-      <AltusMap palette={palette} zones={zones} routes={routes} activeZone={zone} onZone={(s) => { setZone(s); setRoute(null); }} onRoute={(p) => setRoute(routes.find((r) => r.slug === p.slug))} />
+      <AltusMap palette={palette} zones={zones} routes={routes} geometry={geometry} activeZone={zone} onZone={(s) => { setZone(s); setRoute(null); }} onRoute={(p) => setRoute({ ...routes.find((r) => r.slug === p.slug), line: p.line })} />
       <div className="mp-title">
         <p className="eyebrow">Map style preview</p>
         <h1>Sea to Sky Routes.</h1>
         <p>Pick an area below, or tap a number on the map. Zoom in to see each route.</p>
-        <div className="mp-toggle" role="group" aria-label="Map colours">
-          {["muted", "dark"].map((p) => <button key={p} aria-pressed={palette === p} onClick={() => setPalette(p)}>{p === "muted" ? "Muted" : "Dark"}</button>)}
-        </div>
+        <div className="mp-legend"><span><i style={{ background: "#5AA9E6" }} />Ski</span><span><i style={{ background: "#E8894A" }} />Rock</span><span><i style={{ background: "#B39BE3" }} />Alpine</span><span><i style={{ background: "#6CCB8F" }} />Run</span></div>
       </div>
       {route && (
         <div className="mp-card">
           <button className="x" aria-label="Close" onClick={() => setRoute(null)}>×</button>
           <span className="eyebrow">{route.discipline} · {route.level}</span>
-          <b>{route.name}</b>
+          <b>{route.name}</b>{route.line && <span className="eyebrow">Line: {route.line}</span>}
           <span>{route.summary}</span>
           <Link className="btn" href={routeHref(route)}>View route</Link>
         </div>
