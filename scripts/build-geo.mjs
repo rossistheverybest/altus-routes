@@ -26,6 +26,23 @@ const zoneSlugs = new Set(JSON.parse(fs.readFileSync("data/zones.json", "utf8"))
 const isDraft = (n) => !n || /track \d+|untitled|\btbd\b|\?/i.test(n);
 const drafts = {};
 const out = [];
+// Thin out GPS points (about 8 m tolerance) so pages stay light.
+function simplify(pts, tol = 0.00008) {
+  if (pts.length < 3) return pts;
+  const keep = new Uint8Array(pts.length); keep[0] = keep[pts.length - 1] = 1;
+  const stack = [[0, pts.length - 1]];
+  while (stack.length) {
+    const [a, b] = stack.pop(); let idx = -1, max = 0;
+    const [ax, ay] = pts[a], [bx, by] = pts[b], dx = bx - ax, dy = (by - ay), len = dx * dx + dy * dy || 1e-12;
+    for (let i = a + 1; i < b; i++) {
+      const t = Math.max(0, Math.min(1, ((pts[i][0] - ax) * dx + (pts[i][1] - ay) * dy) / len));
+      const ex = ax + t * dx - pts[i][0], ey = ay + t * dy - pts[i][1], d = ex * ex + ey * ey;
+      if (d > max) { max = d; idx = i; }
+    }
+    if (idx > 0 && max > tol * tol) { keep[idx] = 1; stack.push([a, idx], [idx, b]); }
+  }
+  return pts.filter((_, i) => keep[i]);
+}
 const round = (c) => (typeof c[0] === "number" ? [+c[0].toFixed(5), +c[1].toFixed(5)] : c.map(round));
 
 async function read(file) {
@@ -70,7 +87,7 @@ for (const file of files) {
       // Gaia draws areas as closed tracks sometimes; a closed line tagged "area" in its name becomes a zone.
       const name = (f.properties?.name || "").trim();
       let geometry = { type: t, coordinates: round(f.geometry.coordinates.map ? f.geometry.coordinates : []) };
-      if (t === "LineString") geometry.coordinates = geometry.coordinates.map((c) => c.slice(0, 2));
+      if (t === "LineString") geometry.coordinates = simplify(geometry.coordinates.map((c) => c.slice(0, 2)));
       if (t === "Polygon") geometry.coordinates = geometry.coordinates.map((r) => r.map((c) => c.slice(0, 2)));
       out.push({ type: "Feature", properties: { slug, zone, discipline, kind: t === "Polygon" ? "area" : "line", name, n: t === "LineString" ? ++n : 0 }, geometry });
     }
