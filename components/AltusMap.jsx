@@ -30,6 +30,8 @@ export default function AltusMap({ palette = "muted", zones, routes, activeZone 
       });
       map.addControl(new maplibregl.NavigationControl({ showCompass: false }), "top-right");
       mapRef.current = map;
+      if (typeof window !== "undefined") window.__altusMap = map;
+      map.on("error", (e) => console.error("[altus-map]", e?.error?.message || e));
       map.on("load", () => {
         const zoneFC = { type: "FeatureCollection", features: zones.map((z) => ({ type: "Feature", properties: { slug: z.slug, name: z.name }, geometry: { type: "Polygon", coordinates: [ring(z.polygon)] } })) };
         const centroid = (z) => { const n = z.polygon.length; return [z.polygon.reduce((a, p) => a + p[1], 0) / n, z.polygon.reduce((a, p) => a + p[0], 0) / n]; };
