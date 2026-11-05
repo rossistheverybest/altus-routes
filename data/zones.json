@@ -25,7 +25,8 @@
     49.58,
     -123.3
    ]
-  ]
+  ],
+  "group": "sea-to-sky"
  },
  {
   "slug": "squamish",
@@ -65,7 +66,8 @@
     49.68,
     -123.28
    ]
-  ]
+  ],
+  "group": "sea-to-sky"
  },
  {
   "slug": "tantalus",
@@ -89,7 +91,8 @@
     49.92,
     -123.42
    ]
-  ]
+  ],
+  "group": "sea-to-sky"
  },
  {
   "slug": "garibaldi",
@@ -117,7 +120,8 @@
     49.74,
     -122.9
    ]
-  ]
+  ],
+  "group": "sea-to-sky"
  },
  {
   "slug": "whistler",
@@ -145,7 +149,8 @@
     50.0729,
     -122.7418
    ]
-  ]
+  ],
+  "group": "sea-to-sky"
  },
  {
   "slug": "pemberton",
@@ -169,7 +174,8 @@
     50.4,
     -122.95
    ]
-  ]
+  ],
+  "group": "sea-to-sky"
  },
  {
   "slug": "duffey",
@@ -193,6 +199,180 @@
     50.5,
     -122.58
    ]
-  ]
+  ],
+  "group": "sea-to-sky"
+ },
+ {
+  "slug": "rogers-pass",
+  "name": "Rogers Pass",
+  "group": "afield",
+  "blurb": "Glacier National Park in the Selkirks, straddling the Trans-Canada Highway. Deep interior snow, steep treeline skiing and big glaciated tours, all managed through Parks Canada's winter permit system.",
+  "polygon": [
+   [
+    51.15,
+    -117.8
+   ],
+   [
+    51.15,
+    -117.35
+   ],
+   [
+    51.45,
+    -117.3
+   ],
+   [
+    51.48,
+    -117.75
+   ]
+  ],
+  "order": 8
+ },
+ {
+  "slug": "rockies",
+  "name": "Canadian Rockies",
+  "group": "afield",
+  "blurb": "Banff, Lake Louise, the Icefields Parkway and Jasper. Limestone peaks, big icefields and a cold continental snowpack: classic alpine rock and ice in summer, icefield traverses in spring.",
+  "polygon": [
+   [
+    50.6,
+    -115.0
+   ],
+   [
+    51.3,
+    -115.4
+   ],
+   [
+    52.3,
+    -116.4
+   ],
+   [
+    53.3,
+    -117.9
+   ],
+   [
+    53.0,
+    -118.6
+   ],
+   [
+    52.0,
+    -117.6
+   ],
+   [
+    51.2,
+    -116.8
+   ],
+   [
+    50.6,
+    -115.9
+   ]
+  ],
+  "order": 9
+ },
+ {
+  "slug": "europe",
+  "name": "Europe",
+  "group": "afield",
+  "blurb": "The Alps: Chamonix, the Haute Route between Chamonix and Zermatt, and the Ortler in the Italian Alps. Hut-to-hut ski touring and classic alpine climbing with a European hut system behind you.",
+  "polygon": [
+   [
+    45.0,
+    5.8
+   ],
+   [
+    45.0,
+    10.5
+   ],
+   [
+    46.2,
+    13.8
+   ],
+   [
+    47.3,
+    13.8
+   ],
+   [
+    47.6,
+    10.0
+   ],
+   [
+    46.6,
+    6.0
+   ]
+  ],
+  "order": 10
+ },
+ {
+  "slug": "japan",
+  "name": "Japan",
+  "group": "afield",
+  "blurb": "Hokkaido and the Japan Alps. Some of the most consistent cold powder anywhere, tree skiing on volcanoes and onsen at the end of the day.",
+  "polygon": [
+   [
+    35.6,
+    136.6
+   ],
+   [
+    37.3,
+    136.6
+   ],
+   [
+    40.8,
+    139.6
+   ],
+   [
+    45.5,
+    141.2
+   ],
+   [
+    45.5,
+    145.9
+   ],
+   [
+    42.0,
+    145.9
+   ],
+   [
+    40.0,
+    141.9
+   ],
+   [
+    35.6,
+    138.7
+   ]
+  ],
+  "order": 11
+ },
+ {
+  "slug": "chile",
+  "name": "Chile",
+  "group": "afield",
+  "blurb": "The central and southern Andes: ski touring on volcanoes and big Andean peaks during our northern summer.",
+  "polygon": [
+   [
+    -32.5,
+    -71.0
+   ],
+   [
+    -32.5,
+    -69.8
+   ],
+   [
+    -37.0,
+    -70.3
+   ],
+   [
+    -41.5,
+    -71.6
+   ],
+   [
+    -41.5,
+    -72.6
+   ],
+   [
+    -37.0,
+    -72.0
+   ]
+  ],
+  "order": 12
  }
 ]

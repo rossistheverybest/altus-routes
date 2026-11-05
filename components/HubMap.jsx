@@ -1,7 +1,7 @@
 "use client";
 // The /routes hub: full-screen map, area blocks, filters, a route card on click and, with an area picked, a list drawer.
 // The full route list is rendered under the map (children) so every route link is in the page for search engines.
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import AltusMap, { COL } from "./AltusMap";
 import TopoTiles from "./TopoTiles";
@@ -15,6 +15,7 @@ export default function HubMap({ zones, routes, geometry, initialZone = null, ch
   const [card, setCard] = useState(null);
   const zoneBy = useMemo(() => Object.fromEntries(zones.map((z) => [z.slug, z])), [zones]);
   const z = zone ? zoneBy[zone] : null;
+  const hubRef = useRef(null);
 
   const match = (r) => (!disc.length || disc.includes(r.discipline)) && (!level || r.level === level) &&
     (!q || `${r.name} ${r.summary} ${r.grade} ${zoneBy[r.zone]?.name}`.toLowerCase().includes(q.toLowerCase()));
@@ -25,7 +26,7 @@ export default function HubMap({ zones, routes, geometry, initialZone = null, ch
 
   const pickZone = (slug) => {
     setZone(slug); setCard(null);
-    try { window.history.replaceState(null, "", slug ? zoneHref(slug) : "/routes"); document.title = slug ? `${zoneBy[slug].name} Routes | Altus Mountain Guides` : "Sea to Sky Routes | Altus Mountain Guides"; } catch {}
+    try { window.history.replaceState(null, "", slug ? zoneHref(slug) : "/routes"); document.title = slug ? `${zoneBy[slug].name} Routes | Altus Mountain Guides` : "Altus Mountain Tick List | Altus Mountain Guides"; } catch {}
   };
   const pickRoute = (p) => {
     const r = p.slug && routes.find((x) => x.slug === p.slug);
@@ -38,16 +39,16 @@ export default function HubMap({ zones, routes, geometry, initialZone = null, ch
 
   return (
     <>
-      <section className={`hub${z ? " haszone" : ""}`} aria-label="Route map">
+      <section ref={hubRef} className={`hub${z ? " haszone" : ""}`} aria-label="Route map">
         <AltusMap zones={zones} routes={routes} geometry={geometry} activeZone={zone} visible={visSlugs} discs={disc.length ? disc : null}
-          selected={card && !card.lineOnly ? card.slug : null} pad={z ? { left: 0.04, right: 0.34, top: 0.1, bottom: 0.3 } : undefined}
+          selected={card && !card.lineOnly ? card.slug : null} pad={z ? { left: 0.04, right: 0.34, top: 0.1, bottom: 0.16 } : undefined}
           onZone={pickZone} onRoute={pickRoute} />
 
         {!z && (
           <div className="hub-title">
-            <p className="eyebrow">Vancouver to the Duffey</p>
-            <h1>Sea to Sky Routes.</h1>
-            <p>Ski tours, rock climbs, alpine summits and mountain runs, written by our guides. Pick an area to start.</p>
+            <p className="eyebrow">Sea to Sky and beyond</p>
+            <h1>Altus Mountain Tick List.</h1>
+            <p>Ski tours, rock climbs, alpine routes and mountain runs our guides rate, written up with the guided option for each. Tap a route on the map, or pick an area below.</p>
             <div className="hub-legend">{Object.entries(DISC).map(([k, v]) => <span key={k}><i style={{ background: COL[k] }} />{v.label} {routes.filter((r) => r.discipline === k).length}</span>)}</div>
           </div>
         )}
@@ -68,7 +69,7 @@ export default function HubMap({ zones, routes, geometry, initialZone = null, ch
                   </button>
                 </li>
               ))}
-              {!inZone.length && <li className="hd-empty">No routes here match the filters.</li>}
+              {!inZone.length && <li className="hd-empty">{routes.some((r) => r.zone === z.slug) ? "No routes here match the filters." : "Routes for this area are coming soon. Ask us about guided trips here."}</li>}
             </ul>
           </aside>
         )}
@@ -92,15 +93,6 @@ export default function HubMap({ zones, routes, geometry, initialZone = null, ch
         )}
 
         <div className="hub-bottom">
-          <nav className="hub-blocks" aria-label="Choose an area">
-            <button aria-pressed={!zone} onClick={() => pickZone(null)}><b>All areas</b><span>{count()} routes</span></button>
-            {zones.map((x) => (
-              <button key={x.slug} aria-pressed={zone === x.slug} onClick={() => pickZone(x.slug)}>
-                <b>{x.name}</b><span>{count(x.slug)} route{count(x.slug) === 1 ? "" : "s"}</span>
-                <span className="hb-bar">{Object.keys(DISC).map((k) => { const n = vis.filter((r) => r.zone === x.slug && r.discipline === k).length; return n ? <i key={k} style={{ flex: n, background: COL[k] }} /> : null; })}</span>
-              </button>
-            ))}
-          </nav>
           <div className="hub-filters" role="toolbar" aria-label="Filter routes">
             {Object.entries(DISC).map(([k, v]) => <button key={k} className="chip" aria-pressed={disc.includes(k)} onClick={() => toggle(k)}><span className="dot" style={{ background: COL[k] }} />{v.label}</button>)}
             <label className="hf-level"><span className="sr">Ability</span>
@@ -112,7 +104,57 @@ export default function HubMap({ zones, routes, geometry, initialZone = null, ch
           </div>
         </div>
       </section>
+      <AreaBlocks zones={zones} routes={routes.filter((r) => (!level || r.level === level) && (!q || `${r.name} ${r.summary} ${r.grade}`.toLowerCase().includes(q.toLowerCase())))}
+        disc={disc} toggle={toggle} clear={() => setDisc([])} zone={zone}
+        onPick={(slug) => { pickZone(slug); hubRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }); }} />
       <div id="list">{children}</div>
     </>
+  );
+}
+
+// Area blocks under the map, sortable by activity.
+function AreaBlocks({ zones, routes, disc, toggle, clear, zone, onPick }) {
+  const stats = (slug) => Object.fromEntries(Object.keys(DISC).map((k) => [k, routes.filter((r) => r.zone === slug && r.discipline === k).length]));
+  const score = (st) => (disc.length ? disc.reduce((a, d) => a + st[d], 0) : Object.values(st).reduce((a, b) => a + b, 0));
+  const groups = [["sea-to-sky", "Sea to Sky"], ["afield", "Further afield"]];
+  const centre = (p) => [p.reduce((a, x) => a + x[0], 0) / p.length, p.reduce((a, x) => a + x[1], 0) / p.length];
+  const zoomFor = (p) => { const span = Math.max(...p.map((x) => x[1])) - Math.min(...p.map((x) => x[1])); return Math.max(4, Math.min(11, Math.round(Math.log2(360 / span)) - 1)); };
+  return (
+    <section className="areas gut" aria-label="Areas">
+      <div className="wrap areas-in">
+        <div className="areas-head">
+          <div><p className="eyebrow">Choose an area</p><h2 className="sechead">Areas</h2></div>
+          <div className="areas-sort" role="group" aria-label="Sort areas by activity">
+            <button className="chip" aria-pressed={!disc.length} onClick={clear}>All activities</button>
+            {Object.entries(DISC).map(([k, v]) => <button key={k} className="chip" aria-pressed={disc.includes(k)} onClick={() => toggle(k)}><span className="dot" style={{ background: COL[k] }} />{v.label}</button>)}
+          </div>
+        </div>
+        {groups.map(([g, label]) => {
+          const zs = zones.filter((x) => (x.group || "sea-to-sky") === g).map((x) => ({ ...x, st: stats(x.slug) })).map((x) => ({ ...x, n: score(x.st) }))
+            .sort((a, b) => (disc.length ? b.n - a.n : 0));
+          return (
+            <div key={g} className="areas-group">
+              <h3 className="eyebrow">{label}</h3>
+              <div className="areas-grid">
+                {zs.map((x) => {
+                  const total = Object.values(x.st).reduce((a, b) => a + b, 0);
+                  const [lat, lng] = centre(x.polygon);
+                  return (
+                    <button key={x.slug} className={`area${x.n === 0 ? " dim" : ""}${zone === x.slug ? " on" : ""}`} onClick={() => onPick(x.slug)}>
+                      <span className="area-topo"><TopoTiles lat={lat} lng={lng} z={zoomFor(x.polygon)} cols={3} rows={3} className="dim" /></span>
+                      <span className="area-body">
+                        <b>{x.name}</b>
+                        <span className="area-count">{total ? `${total} route${total === 1 ? "" : "s"}` : "Routes coming soon"}</span>
+                        {total > 0 && <span className="area-acts">{Object.entries(x.st).filter(([, n]) => n).map(([k, n]) => <span key={k} className={disc.length && !disc.includes(k) ? "off" : ""}><i style={{ background: COL[k] }} />{n} {DISC[k].label.toLowerCase()}</span>)}</span>}
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </section>
   );
 }

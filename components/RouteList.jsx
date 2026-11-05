@@ -6,6 +6,9 @@ import { zoneHref } from "../lib/shared";
 export default function RouteList({ zones, routes, crag, only = null }) {
   return (
     <div className="gut"><div className="wrap routelist">
+      {only && !routes.some((r) => r.zone === only) && (
+        <p className="lede" style={{ maxWidth: "60ch" }}>Route pages for this area are coming soon. In the meantime, <a href="mailto:info@altusmountainguides.com" style={{ color: "var(--gold)" }}>ask us about guided trips here</a>.</p>
+      )}
       {zones.filter((z) => !only || z.slug === only).map((z) => {
         const rs = routes.filter((r) => r.zone === z.slug); if (!rs.length) return null;
         return (
