@@ -9,7 +9,8 @@
 // A whole ski zone's lines (not tied to one route page): zone--whistler.kmz, zone--pemberton.kmz (zone slugs from zones.json)
 // Not ski? add the discipline: zone--garibaldi--run.gpx
 //
-// Lines with no name, a Gaia default name ("... Track 12", "Untitled Path") or a name with "TBD" or "?" stay off the public map
+// Multi-day routes: name the tracks "Day 1 - ...", "Day 2 - ..." and they're listed in day order with their distance.
+// Lines with no name, a Gaia default name ("... Track 12", "Untitled Path", a date) or a name with "TBD" or "?" stay off the public map
 // until they're given a proper name. Named points (huts, camps) show as hut markers; Gaia's (Start)/(End) points are ignored.
 import fs from "node:fs";
 import path from "node:path";
@@ -23,7 +24,21 @@ const slugs = new Set(routes.map((r) => r.slug));
 const discOf = Object.fromEntries(routes.map((r) => [r.slug, r.discipline]));
 const zoneOf = Object.fromEntries(routes.map((r) => [r.slug, r.zone]));
 const zoneSlugs = new Set(JSON.parse(fs.readFileSync("data/zones.json", "utf8")).map((z) => z.slug));
-const isDraft = (n) => !n || /track \d+|untitled|\btbd\b|\?/i.test(n);
+const isDraft = (n) => !n || /track \d+|untitled|\btbd\b|\?|\d{1,2}\/\d{1,2}\/\d{2}|^track \(/i.test(n);
+// Waypoints that aren't places: Gaia's (Start)/(End), photo pins and bare numbers.
+const skipPoint = (n) => !n || /^\((start|end)\)$/i.test(n) || /^my photo/i.test(n) || /^\d+$/.test(n);
+// Line length in km (for stage lists like "Day 3 · 13.6 km").
+function km(c) {
+  let d = 0;
+  for (let i = 1; i < c.length; i++) {
+    const [x1, y1] = c[i - 1], [x2, y2] = c[i], r = Math.PI / 180;
+    const a = Math.sin(((y2 - y1) * r) / 2) ** 2 + Math.cos(y1 * r) * Math.cos(y2 * r) * Math.sin(((x2 - x1) * r) / 2) ** 2;
+    d += 12742 * Math.asin(Math.sqrt(a));
+  }
+  return +d.toFixed(1);
+}
+// "Day 2 - ..." before "Day 10 - ...", everything else keeps file order.
+const dayNum = (n) => { const m = /^day\s*(\d+)/i.exec(n || ""); return m ? +m[1] : null; };
 const drafts = {};
 const out = [];
 // Thin out GPS points (about 8 m tolerance) so pages stay light.
@@ -74,11 +89,13 @@ for (const file of files) {
   try {
     const fc = await read(file);
     let n = 0;
-    for (const f of (fc.features || []).flatMap(flatten)) {
+    const feats = (fc.features || []).flatMap(flatten);
+    if (feats.some((f) => dayNum(f.properties?.name) != null)) feats.sort((a, b) => (dayNum(a.properties?.name) ?? 999) - (dayNum(b.properties?.name) ?? 999));
+    for (const f of feats) {
       const t = f.geometry.type;
       const nm = (f.properties?.name || "").trim();
       if (t === "Point") {
-        if (!nm || /^\((start|end)\)$/i.test(nm)) continue;
+        if (skipPoint(nm)) continue;
         out.push({ type: "Feature", properties: { slug, zone, discipline, kind: "hut", name: nm, n: 0 }, geometry: { type: "Point", coordinates: round(f.geometry.coordinates.slice(0, 2)) } });
         continue;
       }
@@ -86,10 +103,11 @@ for (const file of files) {
       if (t === "LineString" && isDraft(nm)) { (drafts[file] = drafts[file] || []).push(nm || "(no name)"); continue; }
       // Gaia draws areas as closed tracks sometimes; a closed line tagged "area" in its name becomes a zone.
       const name = (f.properties?.name || "").trim();
+      const len = t === "LineString" ? km(f.geometry.coordinates) : 0;
       let geometry = { type: t, coordinates: round(f.geometry.coordinates.map ? f.geometry.coordinates : []) };
       if (t === "LineString") geometry.coordinates = simplify(geometry.coordinates.map((c) => c.slice(0, 2)));
       if (t === "Polygon") geometry.coordinates = geometry.coordinates.map((r) => r.map((c) => c.slice(0, 2)));
-      out.push({ type: "Feature", properties: { slug, zone, discipline, kind: t === "Polygon" ? "area" : "line", name, n: t === "LineString" ? ++n : 0 }, geometry });
+      out.push({ type: "Feature", properties: { slug, zone, discipline, kind: t === "Polygon" ? "area" : "line", name, n: t === "LineString" ? ++n : 0, ...(len ? { km: len } : {}) }, geometry });
     }
   } catch (e) { console.warn(`build-geo: could not read ${file}: ${e.message}`); }
 }

@@ -180,6 +180,7 @@ h1{font-family:var(--f-head);font-weight:700;font-size:clamp(48px,8vw,112px);let
 .lines{columns:2 220px;column-gap:24px;list-style:none;margin:14px 0 0;padding:0;font-size:15px}
 .lines li{break-inside:avoid;display:flex;gap:10px;padding:4px 0}
 .lines b{font-family:var(--f-head);font-weight:400;color:var(--gold);min-width:2ch;text-align:right}
+.lines .km{opacity:.65;white-space:nowrap}
 .lineslot{border:1px dashed var(--line);border-radius:var(--r);padding:28px;text-align:center;color:var(--muted)}
 .disclaimer{font-size:14px;color:var(--muted);margin:0;max-width:90ch}
 .more{display:flex;flex-direction:column}
