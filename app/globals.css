@@ -480,3 +480,5 @@ h1{font-size:clamp(44px,7vw,96px)}
 .hc-line{color:var(--copper-tx)}
 .hub-card .x{background:#fff;border:1px solid var(--line);color:var(--ink)}
 @media (max-width:900px){.hub{height:82svh;margin:0}}
+/* topo backdrops graded toward the main site's muted photo look */
+.area-topo .tiles,.cimg .tiles,.hd-thumb .tiles,.hc-img .tiles,.hero .tiles,.cph .tiles{filter:saturate(.45) sepia(.12) contrast(1.05) brightness(.97)}
