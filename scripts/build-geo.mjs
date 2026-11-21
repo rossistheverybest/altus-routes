@@ -111,6 +111,10 @@ for (const file of files) {
     }
   } catch (e) { console.warn(`build-geo: could not read ${file}: ${e.message}`); }
 }
+// Huts from the Sheet's Huts tab (data/huts.json, written by sync-sheet).
+const HUTS = fs.existsSync("data/huts.json") ? JSON.parse(fs.readFileSync("data/huts.json", "utf8")) : [];
+for (const h of HUTS) out.push({ type: "Feature", properties: { slug: "", zone: "", discipline: "", kind: "hut", name: h.name, n: 0, htype: h.type, operator: h.operator, url: h.url, ele: h.ele, sleeps: h.sleeps }, geometry: { type: "Point", coordinates: [+h.lng.toFixed(5), +h.lat.toFixed(5)] } });
+if (HUTS.length) console.log(`build-geo: ${HUTS.length} huts from the Sheet`);
 fs.writeFileSync("data/geometry.json", JSON.stringify({ type: "FeatureCollection", features: out }));
 const by = {}; out.forEach((f) => { const k = f.properties.slug || "zone:" + f.properties.zone; by[k] = by[k] || { line: 0, area: 0, hut: 0 }; by[k][f.properties.kind]++; });
 for (const [file, list] of Object.entries(drafts)) console.log(`build-geo: ${file}: ${list.length} unnamed/draft lines kept off the map (${[...new Set(list)].slice(0, 6).join(", ")}${list.length > 6 ? ", ..." : ""})`);

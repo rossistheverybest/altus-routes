@@ -29,6 +29,7 @@ export default function HubMap({ zones, routes, geometry, initialZone = null, ch
     try { window.history.replaceState(null, "", slug ? zoneHref(slug) : "/routes"); document.title = slug ? `${zoneBy[slug].name} Routes | Altus Mountain Guides` : "Altus Mountain Tick List | Altus Mountain Guides"; } catch {}
   };
   const pickRoute = (p) => {
+    if (p.hut) { setCard({ ...p }); return; }
     const r = p.slug && routes.find((x) => x.slug === p.slug);
     setCard(r ? { ...r, line: p.line } : { lineOnly: true, name: p.line, zone: p.zone, discipline: p.discipline });
     if (r && r.zone !== zone) setZone(r.zone);
@@ -77,14 +78,16 @@ export default function HubMap({ zones, routes, geometry, initialZone = null, ch
         {card && (
           <div className="hub-card" role="dialog" aria-label={card.name}>
             <button className="x" aria-label="Close" onClick={() => setCard(null)}>×</button>
-            {!card.lineOnly && <span className="hc-img">{card.hero ? <img src={card.hero} alt="" /> : <TopoTiles lat={card.lat} lng={card.lng} z={13} cols={3} rows={3} />}</span>}
+            {!card.lineOnly && !card.hut && <span className="hc-img">{card.hero ? <img src={card.hero} alt="" /> : <TopoTiles lat={card.lat} lng={card.lng} z={13} cols={3} rows={3} />}</span>}
             <div className="hc-body">
-              <span className="eyebrow">{DISC[card.discipline]?.label}{card.level ? ` · ${card.level}` : ""}{card.reportCount ? ` · ${card.reportCount} report${card.reportCount > 1 ? "s" : ""}` : ""}</span>
+              {card.hut ? <span className="eyebrow">{card.type || "Hut"}{card.ele ? ` · ${card.ele} m` : ""}{card.sleeps ? ` · sleeps ${card.sleeps}` : ""}</span> : <span className="eyebrow">{DISC[card.discipline]?.label}{card.level ? ` · ${card.level}` : ""}{card.reportCount ? ` · ${card.reportCount} report${card.reportCount > 1 ? "s" : ""}` : ""}</span>}
               <b>{card.name}</b>
               {card.line && !card.lineOnly && <span className="hc-line">Line: {card.line}</span>}
-              {card.lineOnly ? <span>A line in {zn(card.zone)}. Ask us about guiding it.</span> : <span className="hc-stats">{cardStats(card)}</span>}
+              {card.hut ? (card.operator ? <span className="hc-stats">{card.operator}</span> : null) : card.lineOnly ? <span>A line in {zn(card.zone)}. Ask us about guiding it.</span> : <span className="hc-stats">{cardStats(card)}</span>}
               <div className="hc-btns">
-                {card.lineOnly
+                {card.hut
+                  ? <>{card.url && <a className="btn" href={card.url} rel="noopener" target="_blank">Hut website</a>}<a className="btn solid" href={`mailto:info@altusmountainguides.com?subject=${encodeURIComponent("Guided trip from " + card.name)}`}>Go with a guide</a></>
+                  : card.lineOnly
                   ? <a className="btn solid" href={`mailto:info@altusmountainguides.com?subject=${encodeURIComponent(card.name + " (" + zn(card.zone) + ")")}`}>Ask about it</a>
                   : <><Link className="btn solid" href={routeHref(card)}>View route</Link>{card.guided && <a className="btn" href={card.guided}>Guided trip</a>}</>}
               </div>
