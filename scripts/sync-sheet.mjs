@@ -79,6 +79,16 @@ async function main() {
     console.log(`sync-sheet: ${reps.length} trip reports written`);
   } catch (e) { console.warn("sync-sheet: trip reports not updated:", e.message); }
 
+  // Huts tab: every hut not ticked "remove from map" goes on the hub map.
+  try {
+    const yes = (v) => /^(true|yes|x|1)$/i.test(String(v || "").trim());
+    const huts = parseCSV(await load("Huts", opt("--huts")))
+      .filter((h) => h.Name && !yes(h["remove from map"]))
+      .map((h) => ({ name: h.Name, area: h.Area || "", type: h.Type || "", operator: h.Operator || "", lat: parseFloat(h.Lat), lng: parseFloat(h.Lng), ele: h["Elevation (m)"] || "", sleeps: h.Sleeps || "", url: h["Booking / website"] || "" }))
+      .filter((h) => !Number.isNaN(h.lat) && !Number.isNaN(h.lng));
+    if (huts.length) { fs.writeFileSync("data/huts.json", JSON.stringify(huts, null, 1)); console.log(`sync-sheet: ${huts.length} huts written`); }
+  } catch (e) { console.warn("sync-sheet: huts not updated:", e.message); }
+
   if (problems.length) console.warn("sync-sheet: skipped rows:\n  " + problems.join("\n  "));
 }
 

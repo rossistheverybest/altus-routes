@@ -50,14 +50,15 @@ export default function AltusMap({ zones, routes, geometry = null, activeZone = 
         map.addLayer({ id: "geo-line-case", type: "line", source: "geo", minzoom: 9.5, filter: ["==", ["get", "kind"], "line"], layout: { "line-cap": "round", "line-join": "round" }, paint: { "line-color": "#1d1d1c", "line-opacity": 0.55, "line-width": ["interpolate", ["linear"], ["zoom"], 10, 3, 14, 7] } });
         map.addLayer({ id: "geo-line", type: "line", source: "geo", minzoom: 9.5, filter: ["==", ["get", "kind"], "line"], layout: { "line-cap": "round", "line-join": "round" }, paint: { "line-color": ["get", "color"], "line-width": ["interpolate", ["linear"], ["zoom"], 10, 1.6, 14, 4] } });
         map.addLayer({ id: "geo-line-label", type: "symbol", source: "geo", minzoom: 12.5, filter: ["all", ["==", ["get", "kind"], "line"], ["!=", ["get", "name"], ""]], layout: { "symbol-placement": "line", "text-field": ["get", "name"], "text-font": ["Noto Sans Bold"], "text-size": 11 }, paint: { "text-color": "#1d1d1c", "text-halo-color": "#ffffff", "text-halo-width": 1.4 } });
-        map.addLayer({ id: "geo-hut", type: "circle", source: "geo", minzoom: 10, filter: ["==", ["get", "kind"], "hut"], paint: { "circle-radius": 5, "circle-color": "#fff", "circle-stroke-color": "#1d1d1c", "circle-stroke-width": 2 } });
-        map.addLayer({ id: "geo-hut-label", type: "symbol", source: "geo", minzoom: 11, filter: ["==", ["get", "kind"], "hut"], layout: { "text-field": ["get", "name"], "text-font": ["Noto Sans Bold"], "text-size": 11, "text-offset": [0, 1.1], "text-anchor": "top" }, paint: { "text-color": "#1d1d1c", "text-halo-color": "#fff", "text-halo-width": 1.4 } });
+        map.addLayer({ id: "geo-hut", type: "circle", source: "geo", minzoom: 8.5, filter: ["==", ["get", "kind"], "hut"], paint: { "circle-radius": ["interpolate", ["linear"], ["zoom"], 8.5, 3.5, 12, 6], "circle-color": "#fff", "circle-stroke-color": "#1d1d1c", "circle-stroke-width": 2 } });
+        map.addLayer({ id: "geo-hut-label", type: "symbol", source: "geo", minzoom: 11.5, filter: ["==", ["get", "kind"], "hut"], layout: { "text-field": ["get", "name"], "text-font": ["Noto Sans Bold"], "text-size": 11, "text-offset": [0, 1.1], "text-anchor": "top" }, paint: { "text-color": "#1d1d1c", "text-halo-color": "#fff", "text-halo-width": 1.4 } });
         map.addLayer({ id: "pins", type: "circle", source: "pins", paint: { "circle-radius": ["interpolate", ["linear"], ["zoom"], 7, 5, 12, 8], "circle-color": ["get", "color"], "circle-stroke-color": "#000", "circle-stroke-width": 2 } });
 
         const hit = (l, fn) => { map.on("click", l, (e) => { const f = e.features?.[0]; if (f) fn(f.properties, e); }); map.on("mouseenter", l, () => (map.getCanvas().style.cursor = "pointer")); map.on("mouseleave", l, () => (map.getCanvas().style.cursor = "")); };
         hit("pins", (p) => cb.current.onRoute?.({ slug: p.slug }));
         hit("geo-line", (p) => cb.current.onRoute?.({ slug: p.slug, line: p.name, zone: p.zone, discipline: p.discipline }));
         hit("geo-area-fill", (p) => cb.current.onRoute?.({ slug: p.slug, line: p.name, zone: p.zone, discipline: p.discipline }));
+        hit("geo-hut", (p) => cb.current.onRoute?.({ hut: true, name: p.name, type: p.htype, operator: p.operator, url: p.url, ele: p.ele, sleeps: p.sleeps }));
         hit("zone-fill", (p) => { if (!state.current.activeZone) cb.current.onZone?.(p.slug); });
         map.__ready = true;
         applyZone(true); applyFilters(); cb.current.onReady?.();
