@@ -6,7 +6,7 @@ import "maplibre-gl/dist/maplibre-gl.css";
 import { altusStyle, PALETTES, SOURCES, CONTOUR_THRESHOLDS } from "../lib/mapstyle";
 
 export const COL = { ski: "#5AA9E6", rock: "#E8894A", alpine: "#B39BE3", run: "#6CCB8F" };
-const GOLD = "#FFBF00";
+const GOLD = "#C79A6B";
 const WORLD = [[-180, -85], [180, -85], [180, 85], [-180, 85], [-180, -85]];
 const ring = (poly) => { const r = poly.map(([lat, lng]) => [lng, lat]); r.push(r[0]); return r; };
 const bboxOf = (pts) => { const lngs = pts.map((p) => p[1]), lats = pts.map((p) => p[0]); return [[Math.min(...lngs), Math.min(...lats)], [Math.max(...lngs), Math.max(...lats)]]; };
@@ -81,7 +81,7 @@ export default function AltusMap({ zones, routes, geometry = null, activeZone = 
     const az = state.current.activeZone, z = az && zones.find((x) => x.slug === az);
     m.getSource("spot").setData(z ? { type: "Feature", properties: {}, geometry: { type: "Polygon", coordinates: [WORLD, ring(z.polygon).reverse()] } } : { type: "FeatureCollection", features: [] });
     m.setPaintProperty("zone-fill", "fill-opacity", ["case", ["==", ["get", "slug"], az || ""], 0.1, 0.03]);
-    m.setPaintProperty("zone-line", "line-color", ["case", ["==", ["get", "slug"], az || ""], GOLD, "#C79A6B"]);
+    m.setPaintProperty("zone-line", "line-color", ["case", ["==", ["get", "slug"], az || ""], "#8F6538", "#C79A6B"]);
     m.setPaintProperty("zone-line", "line-width", ["case", ["==", ["get", "slug"], az || ""], 3, 1.4]);
     const home = zones.filter((x) => (x.group || "sea-to-sky") === "sea-to-sky");
     try { m.fitBounds(bboxOf(z ? z.polygon : home.flatMap((x) => x.polygon)), { padding: padding(m), duration: instant ? 0 : 900 }); } catch {}
