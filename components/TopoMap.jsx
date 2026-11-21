@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 import { TOPO, AERIAL } from "../lib/tiles";
 
 const COL = { ski: "#5AA9E6", rock: "#E8894A", alpine: "#B39BE3", run: "#6CCB8F" };
-const GOLD = "#FCB124";
+const GOLD = "#C79A6B";
 
 export default function TopoMap({ mode = "corridor", zones = [], routes = [], activeZone = null, visible = null, hover = null, onHover, tracks = null, areas = null, point = null, discipline = "ski", height, className = "" }) {
   const el = useRef(null);
