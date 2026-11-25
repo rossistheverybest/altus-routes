@@ -1,4 +1,6 @@
-import { ZONES, ROUTES, CRAG, GEOMETRY, lite, liteZone } from "../../lib/data";
+import { ZONES, ROUTES, CRAG, GEOMETRY, COLLECTIONS, lite, liteZone } from "../../lib/data";
+import CollTile from "../../components/CollTile";
+import Link from "next/link";
 import { SITE_URL } from "../../lib/site";
 import { JsonLd } from "../../components/Chrome";
 import HubMap from "../../components/HubMap";
@@ -15,6 +17,12 @@ export default function Hub() {
   return (
     <>
       <HubMap zones={zones} routes={routes} geometry={GEOMETRY}>
+        {COLLECTIONS.length > 0 && (
+          <section className="hub-colls gut" aria-labelledby="hubcoll"><div className="wrap" style={{ paddingBottom: 0 }}>
+            <div className="areas-head"><div><p className="eyebrow">Curated by our guides</p><h2 id="hubcoll" className="sechead">Collections</h2></div><Link className="linkbtn" href="/collections">All collections →</Link></div>
+            <div className="coll-grid">{COLLECTIONS.map((c) => <CollTile key={c.slug} c={c} />)}</div>
+          </div></section>
+        )}
         <RouteList zones={zones} routes={routes} crag={crag} />
       </HubMap>
       <JsonLd data={{

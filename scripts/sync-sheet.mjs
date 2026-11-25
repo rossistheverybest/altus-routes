@@ -79,6 +79,14 @@ async function main() {
     console.log(`sync-sheet: ${reps.length} trip reports written`);
   } catch (e) { console.warn("sync-sheet: trip reports not updated:", e.message); }
 
+  // Collections tab: curated lists. Routes join a collection through the Routes "collections" column (comma-separated slugs).
+  try {
+    const cols = parseCSV(await load("Collections", opt("--collections")))
+      .filter((c) => c.slug && c.title && c.status !== "BACKLOG")
+      .map((c) => ({ slug: c.slug.trim(), title: c.title, intro: c.intro || "", hero_photo: c.hero_photo || "", products: products(c.products), status: c.status || "DRAFTED", order: Number(c.order) || 99 }));
+    if (cols.length) { fs.writeFileSync("data/collections.json", JSON.stringify(cols, null, 1)); console.log(`sync-sheet: ${cols.length} collections written`); }
+  } catch (e) { console.warn("sync-sheet: collections not updated:", e.message); }
+
   // Huts tab: every hut not ticked "remove from map" goes on the hub map.
   try {
     const yes = (v) => /^(true|yes|x|1)$/i.test(String(v || "").trim());

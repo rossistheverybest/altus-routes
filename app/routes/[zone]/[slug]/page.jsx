@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ROUTES, CRAG, zoneBy, routeBy, reportsFor, routeForCragLine, lite } from "../../../../lib/data";
+import { ROUTES, CRAG, zoneBy, routeBy, reportsFor, routeForCragLine, lite, collectionsFor } from "../../../../lib/data";
 import { DISC, unit, routeHref, zoneHref } from "../../../../lib/shared";
 import { SITE_URL, BUILD_NOTES, SITE_NOINDEX, INDEXABLE_STATUSES } from "../../../../lib/site";
 import { cragSVG } from "../../../../lib/crag";
@@ -121,6 +121,9 @@ export default async function RoutePage({ params }) {
               <dl className="facts">{facts.map(([k, v]) => <div key={k}><dt>{k}</dt><dd>{v}</dd></div>)}</dl>
               {hasRatings(r) && <Ratings r={r} />}
             </section>
+            {collectionsFor(r.slug).length > 0 && (
+              <div><p className="eyebrow">In these collections</p><div className="route-colls">{collectionsFor(r.slug).map((c) => <Link key={c.slug} href={`/collections/${c.slug}`}>{c.title}</Link>)}</div></div>
+            )}
             <div className="guide" id="guide">
               <p className="eyebrow">Go with a guide</p>
               <p>{r.go_guided}</p>
