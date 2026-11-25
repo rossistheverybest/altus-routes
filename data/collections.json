@@ -1,0 +1,90 @@
+[
+ {
+  "slug": "sea-to-sky-classics",
+  "order": 1,
+  "status": "DRAFTED",
+  "title": "Sea to Sky Classics",
+  "intro": "The routes our guides come back to year after year between Squamish and Whistler: granite on the Stawamus Chief, first summits above the Sea to Sky Gondola, the big glaciated traverses of Garibaldi and the Spearhead, and a steep couloir on Wedge. If you only tick a handful of objectives in the Sea to Sky, start here.",
+  "hero_photo": "",
+  "products": [
+   {
+    "name": "Custom Guided Mountaineering",
+    "url": "https://altusmountainguides.com/trips/custom-guided-mountaineering"
+   },
+   {
+    "name": "Custom Multi-Pitch Climbing",
+    "url": "https://altusmountainguides.com/trips/squamish-multi-pitch-climbing-guides"
+   },
+   {
+    "name": "Custom Backcountry Ski Trips",
+    "url": "https://altusmountainguides.com/trips/custom-backcountry-ski-trips"
+   }
+  ]
+ },
+ {
+  "slug": "first-alpine-summit",
+  "order": 2,
+  "status": "DRAFTED",
+  "title": "Your First Alpine Summit",
+  "intro": "Real alpine summits, with snow, rock and in places glacier, on routes moderate enough to be a first step into the mountains. These are the peaks we use to introduce people to mountaineering, either as a guided day or as the goal of a course.",
+  "hero_photo": "",
+  "products": [
+   {
+    "name": "Intro Mountaineering Course",
+    "url": "https://altusmountainguides.com/courses/intro-mountaineering-course"
+   },
+   {
+    "name": "Sky Pilot Summit",
+    "url": "https://altusmountainguides.com/trips/sky-pilot-summit"
+   },
+   {
+    "name": "Mount Tricouni – North Ridge",
+    "url": "https://altusmountainguides.com/trips/mount-tricouni-north-ridge"
+   }
+  ]
+ },
+ {
+  "slug": "lift-accessed-ski-touring",
+  "order": 3,
+  "status": "DRAFTED",
+  "title": "Lift-Accessed Ski Touring",
+  "intro": "Ski touring that starts from the lifts at Whistler Blackcomb: ride up, then skin out past the boundary into the backcountry. More skiing for less climbing, and a natural first step for strong resort skiers heading into avalanche terrain with a guide.",
+  "hero_photo": "",
+  "products": [
+   {
+    "name": "Intro Backcountry Touring Course",
+    "url": "https://altusmountainguides.com/courses/intro-backcountry-touring-course"
+   },
+   {
+    "name": "Spearhead Hut Overnight",
+    "url": "https://altusmountainguides.com/trips/spearhead-hut-overnight"
+   },
+   {
+    "name": "AST 1 – Whistler",
+    "url": "https://altusmountainguides.com/courses/ast-1-avalanche-skill-training-whistler"
+   }
+  ]
+ },
+ {
+  "slug": "classic-multi-day-traverses",
+  "order": 4,
+  "status": "DRAFTED",
+  "title": "Classic Multi-Day Traverses",
+  "intro": "Multi-day journeys from one side of a range to the other: the glaciated ski traverses of the Coast Mountains, the Tantalus on foot, and the Dolomites' Alta Via 2. Each one needs fitness, the right skills for its terrain and a good weather window.",
+  "hero_photo": "",
+  "products": [
+   {
+    "name": "Spearhead Traverse (guided trip)",
+    "url": "https://altusmountainguides.com/trips/spearhead-traverse-2"
+   },
+   {
+    "name": "Tantalus Traverse",
+    "url": "https://altusmountainguides.com/trips/tantalus-traverse"
+   },
+   {
+    "name": "Glacier Travel & Crevasse Rescue (ski)",
+    "url": "https://altusmountainguides.com/courses/glacier-travel-and-crevasse-rescue-course"
+   }
+  ]
+ }
+]

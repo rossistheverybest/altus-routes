@@ -50,7 +50,8 @@
   "verify": "P1 check 2 Nov. Fixed: access now covers the BC Parks day-use pass and marked uptracks. Still yours: keep as a public info page (rewrite go_guided – you sell nothing on the North Shore) or drop? Both linked products run elsewhere (Intro Touring at WB, Snowshoe AST 1 in the Callaghan). Level 'Intro' vs ATES to Complex (First Pump Challenging, summit Complex) – change level or limit the page to Pump Peak? Gain/distance need your GPS (published ≈8 km return, ≈580 m to the summit). 2026/27 pass dates not announced; mention the AM/PM slots? Photos all blank.",
   "aspect": "",
   "max_pitch": "",
-  "terrain": "Treeline"
+  "terrain": "Treeline",
+  "collections": ""
  },
  {
   "status": "DRAFTED",
@@ -99,7 +100,8 @@
   "verify": "Distance, gain, and whether we guide it. GPX added: 27.6 km, ≈2,750 m gain (north to south, from 81 m near Porteau to 914 m at Cypress), high point 1,730 m. The track runs Porteau to Cypress; the description runs Cypress to Porteau. Which way do we go? Track has no times.",
   "aspect": "",
   "max_pitch": "",
-  "terrain": "Alpine ridge"
+  "terrain": "Alpine ridge",
+  "collections": ""
  },
  {
   "status": "DRAFTED",
@@ -152,7 +154,8 @@
   "verify": "Grade (5.10c), pitches (6 on the buttress) and approach checked – see Verify log. Your call: which Apron route you use on Challenge the Chief. The description now says the day starts on the Apron (no source supports hiking the Chief trail to the base). ≈330 m only holds if the Apron counts; the buttress alone is ≈182 m.",
   "aspect": "S",
   "max_pitch": "",
-  "terrain": "Granite multi-pitch"
+  "terrain": "Granite multi-pitch",
+  "collections": "sea-to-sky-classics"
  },
  {
   "status": "DRAFTED",
@@ -205,7 +208,8 @@
   "verify": "Summit checked: tops out on the Second Peak (655 m); last pitch is a 5.8 squeeze chimney, not 5.7 (overview fixed). Your call: follower prerequisite – the row says top-roping 5.8–5.9, your Custom Multi-Pitch page only gives the general 5.6 minimum.",
   "aspect": "",
   "max_pitch": "",
-  "terrain": "Granite ridge"
+  "terrain": "Granite ridge",
+  "collections": ""
  },
  {
   "status": "DRAFTED",
@@ -254,7 +258,8 @@
   "verify": "Grade wording (5.11a A0 vs 5.11d free), pitch count, and whether we guide it.",
   "aspect": "",
   "max_pitch": "",
-  "terrain": "Granite big wall"
+  "terrain": "Granite big wall",
+  "collections": "sea-to-sky-classics"
  },
  {
   "status": "DRAFTED",
@@ -307,7 +312,8 @@
   "verify": "",
   "aspect": "",
   "max_pitch": "",
-  "terrain": "Granite slab"
+  "terrain": "Granite slab",
+  "collections": ""
  },
  {
   "status": "DRAFTED",
@@ -356,7 +362,8 @@
   "verify": "Pitch count, exact location and descent.",
   "aspect": "",
   "max_pitch": "",
-  "terrain": "Granite multi-pitch"
+  "terrain": "Granite multi-pitch",
+  "collections": ""
  },
  {
   "status": "DRAFTED",
@@ -413,7 +420,8 @@
   "verify": "Grade range and season.",
   "aspect": "",
   "max_pitch": "",
-  "terrain": "Granite crag"
+  "terrain": "Granite crag",
+  "collections": ""
  },
  {
   "status": "DRAFTED",
@@ -466,7 +474,8 @@
   "verify": "GPX added (12 Jul 2017): 17.8 km round trip from the gondola top, ≈1,340 m GPS gain. Track tops out at 1,982 m, below the 2,031 m summit; Ross says the track high point is likely a GPS error, so the summit height stays.",
   "aspect": "",
   "max_pitch": "45°",
-  "terrain": "Glacier, Rock"
+  "terrain": "Glacier, Rock",
+  "collections": "sea-to-sky-classics, first-alpine-summit"
  },
  {
   "status": "DRAFTED",
@@ -515,7 +524,8 @@
   "verify": "Route name and grade (Gambit Groove?), summit height. GPX added (30 Jun 2020): 6.3 km round trip from 1,041 m (49.6532, -123.0915), ≈1,000 m gain, high point 1,782 m at 49.6586, -123.0831, 2 h 05 m moving. The pin (49.637, -123.091) is about 2 km south of the track's high point: move it? Was this the climb or a run up the scramble?",
   "aspect": "",
   "max_pitch": "",
-  "terrain": "Alpine rock"
+  "terrain": "Alpine rock",
+  "collections": "first-alpine-summit"
  },
  {
   "status": "DRAFTED",
@@ -564,7 +574,8 @@
   "verify": "Pin location; summit height; whether it should sit in a Whistler/Callaghan zone instead.",
   "aspect": "N",
   "max_pitch": "45–55°",
-  "terrain": "Alpine rock, Glacier"
+  "terrain": "Alpine rock, Glacier",
+  "collections": "first-alpine-summit"
  },
  {
   "status": "DRAFTED",
@@ -617,7 +628,8 @@
   "verify": "Summit heights done (First 610 m, Second 655 m, Third 702 m). Still needs your GPS track: loop distance and gain. Sources disagree (5.7–11 km, 563–600 m published); BC Parks gives 1.8 km and 630 m one way to the Third Peak alone, so the full loop is probably ≈6–7 km and 700–800 m. GPX added (9 Jun 2025): First Peak only, 4.1 km round trip, ≈550 m gain from the parking lot (70 m) to 619 m, 1 h 18 m. The page covers all three peaks, so the line shows First Peak only; add a full three-peak track when you have one.",
   "aspect": "",
   "max_pitch": "",
-  "terrain": "Forest, Granite"
+  "terrain": "Forest, Granite",
+  "collections": ""
  },
  {
   "status": "DRAFTED",
@@ -666,7 +678,8 @@
   "verify": "Distance and gain; download ticket price. GPX added (18 Jul 2026): 3.8 km and ≈770 m gain from 147 m (49.6735, -123.1539) to the gondola summit at 885 m, 1 h 54 m. That's half the published ~7.5 km and starts higher than the trailhead: a different line or a partial recording? Published stats left as they are until you confirm.",
   "aspect": "",
   "max_pitch": "",
-  "terrain": "Forest"
+  "terrain": "Forest",
+  "collections": ""
  },
  {
   "status": "DRAFTED",
@@ -719,7 +732,8 @@
   "verify": "P1 check 2 Nov. Fill stats from your track or move back to DRAFTED. Still yours: Dione east face angle; Alpha west couloir rappel; which of the 24 KMZ lines to publish (Mount Ionia is real, beside Serratus, but no 'Ionia bowl' ski line found); gpx_file should be one Gaia track, not a 24-line KMZ. Pin ≈830 m east of the hut (ACC: 49.7991, -123.3096) – on purpose? Hut opens 1 Mar–30 Sep: season 'March to May'? Steeps and Peaks doesn't run in the Tantalus – drop or label as prerequisite. Say in access that the hut is locked and booked via the ACC Vancouver Section? Guide quote blank.",
   "aspect": "",
   "max_pitch": "",
-  "terrain": "Alpine, Glacier"
+  "terrain": "Alpine, Glacier",
+  "collections": ""
  },
  {
   "status": "DRAFTED",
@@ -776,7 +790,8 @@
   "verify": "Heights found: Tantalus 2,608 m (some sources 2,603), Dione 2,590, Serratus 2,321, Alpha 2,302. high_point_m set to 2608 – confirm Tantalus against your map, then clear.",
   "aspect": "",
   "max_pitch": "45–55°",
-  "terrain": "Alpine rock, Glacier"
+  "terrain": "Alpine rock, Glacier",
+  "collections": "classic-multi-day-traverses"
  },
  {
   "status": "DRAFTED",
@@ -829,7 +844,8 @@
   "verify": "P1 check 2 Nov. Do you sell this? It's not on your site, including Custom Backcountry Ski Trips – keep the custom link and go_guided, or rewrite. Gain needs your GPS (≈1,700–1,900 m). Distance 39 km vs UBC VOC's 16 km (icefield only?) – confirm from your track. Season: narrow to 'late winter to early spring' (needs a frozen Garibaldi Lake)? The Glacier Travel course is prep (Smoke Bluffs/WB), not run on this route. Photos blank.",
   "aspect": "All",
   "max_pitch": "",
-  "terrain": "Alpine, Glacier"
+  "terrain": "Alpine, Glacier",
+  "collections": "sea-to-sky-classics, classic-multi-day-traverses"
  },
  {
   "status": "DRAFTED",
@@ -886,7 +902,8 @@
   "verify": "P1 check 2 Nov. Gain – BC Parks gives 700 m in its trail PDF but 600 m on its area page; settle from your GPS. Level 'Intro' – BC Parks calls Diamond Head intermediate-to-advanced touring; keep Intro for the trail to Elfin only? Season: BC Parks says mid-Nov to Apr/May – widen? go_guided promises a 'first guided winter summit' you don't sell – keep? Snowshoe AST 1 (Callaghan) and Intro Touring (WB) run elsewhere – keep or remove? Photos blank.",
   "aspect": "",
   "max_pitch": "",
-  "terrain": "Treeline, Alpine"
+  "terrain": "Treeline, Alpine",
+  "collections": ""
  },
  {
   "status": "DRAFTED",
@@ -939,7 +956,8 @@
   "verify": "Road access done: no vehicles past the last yellow gate at ≈km 11 (BC road report, 19 Oct 2026). Still yours: gain and distance need your GPS track (one party: ≈2,130 m and 30 km return from 884 m). Your trip page only shows the 2-day trip – confirm the one-day heli option in 'time' and 'go_guided', or I'll take it out.",
   "aspect": "NE",
   "max_pitch": "",
-  "terrain": "Glacier"
+  "terrain": "Glacier",
+  "collections": "sea-to-sky-classics"
  },
  {
   "status": "DRAFTED",
@@ -992,7 +1010,8 @@
   "verify": "Distance, gain, summit height; day-use pass rules.",
   "aspect": "",
   "max_pitch": "",
-  "terrain": "Alpine"
+  "terrain": "Alpine",
+  "collections": ""
  },
  {
   "status": "DRAFTED",
@@ -1041,7 +1060,8 @@
   "verify": "Distance, gain and pin location.",
   "aspect": "",
   "max_pitch": "",
-  "terrain": "Alpine"
+  "terrain": "Alpine",
+  "collections": "sea-to-sky-classics"
  },
  {
   "status": "DRAFTED",
@@ -1094,7 +1114,8 @@
   "verify": "Distance and gain; current parking and day-use pass rules for Diamond Head.",
   "aspect": "",
   "max_pitch": "",
-  "terrain": "Forest, Alpine meadow"
+  "terrain": "Forest, Alpine meadow",
+  "collections": ""
  },
  {
   "status": "DRAFTED",
@@ -1143,7 +1164,8 @@
   "verify": "New row from Ross's GPX (8–9 Jul 2023). Stats from the track: 55.9 km, high point 2,670 m (at 49.9395, -122.9440), gain ≈4,500 m (GPS gain runs high; check), 25 h non-stop, clockwise from Rubble Creek. Still yours: which peaks and glaciers it crosses on the east and south sides; is it off-trail and does it need glacier gear; level Expert?; season; priority; do we guide it? Photos and guide quote blank.",
   "aspect": "",
   "max_pitch": "",
-  "terrain": "Alpine, Trail"
+  "terrain": "Alpine, Trail",
+  "collections": ""
  },
  {
   "status": "DRAFTED",
@@ -1200,7 +1222,8 @@
   "verify": "P1 check 2 Nov. Still yours: ATES Complex not confirmed – check Avalanche Canada's trip planner. Gain 1,800 is a placeholder (sources 1,760–2,000 m); your trip page's daily legs add to 31.4 km/2,900 m vs its 'about 35 km' – fix there. Your guided trip camps two nights in tents, but the overview leans on the Kees and Claire Hut – say so? Level 'Intermediate' with ATES Complex and AST 1/crevasse-rescue skills, while your trip page asks for no glacier experience or AST – which is right? Access: the backcountry ticket covers the first ride up only and you ski down Whistler at the end – reword 'Whistler lifts home'? Guide quote blank.",
   "aspect": "All",
   "max_pitch": "",
-  "terrain": "Alpine, Glacier"
+  "terrain": "Alpine, Glacier",
+  "collections": "sea-to-sky-classics, lift-accessed-ski-touring, classic-multi-day-traverses"
  },
  {
   "status": "DRAFTED",
@@ -1257,7 +1280,8 @@
   "verify": "P1 check 2 Nov. 9.4 km/515 m are Spearhead Huts' summer hiking figures from the Peak Express – replace from your ski GPX. high_point blank (Whistler Peak, Flute or Oboe?). Photos and guide quote blank.",
   "aspect": "All",
   "max_pitch": "",
-  "terrain": "Alpine"
+  "terrain": "Alpine",
+  "collections": "lift-accessed-ski-touring"
  },
  {
   "status": "DRAFTED",
@@ -1314,7 +1338,8 @@
   "verify": "P1 check 2 Nov. Still yours: which lines to feature – suggest Decker Glacier/north face and Spearhead Glacier as the core, with Finger Chutes, Chisel Chute and Y couloir as steeper options. Is 'Intro' right for crevassed glacier terrain at ATES Challenging, when your Intro course uses simple, low-consequence terrain? Gain/distance blank. Description says 'backcountry access gates' – WB now calls them access routes, and the Showcase T-bar is becoming a chairlift for 2026–27; reword once this winter's routes are known. Guide quote blank.",
   "aspect": "",
   "max_pitch": "",
-  "terrain": "Alpine, Glacier"
+  "terrain": "Alpine, Glacier",
+  "collections": "lift-accessed-ski-touring"
  },
  {
   "status": "DRAFTED",
@@ -1367,7 +1392,8 @@
   "verify": "P1 check 2 Nov. Re-check of the side: a G3 report says the Cham Chute runs out toward the Spearhead Glacier, which sits on the same north-east side as Decker and Vista, so the description now says the chutes drop toward the Spearhead Glacier. Still yours: confirm that and the pin from your GPX; '45-degree-plus' in skills is unsourced – your number? Big Mountain Skiing still shows 2025/26 dates – running in 2026/27? (Your Steeps and Peaks page also gives the backcountry ticket as both $59 and $45.)",
   "aspect": "",
   "max_pitch": "55–60° entrance",
-  "terrain": "Alpine, Couloir"
+  "terrain": "Alpine, Couloir",
+  "collections": "lift-accessed-ski-touring"
  },
  {
   "status": "DRAFTED",
@@ -1420,7 +1446,8 @@
   "verify": "P1 check 2 Nov. Still yours: pin is ≈1 km SW of the summit (50.1331, -122.7933) – a NW couloir pin needs your GPS. You sell no Wedge ski trip and neither linked course (Steeps and Peaks, Big Mountain) runs on Wedge – offer it as a custom objective, or rewrite go_guided and products? Your Wedge trip page says 2,904 m and 'stay in the Wedge Hut' (BC Parks: emergency shelter only) – fix there. Photo and guide quote blank.",
   "aspect": "NW",
   "max_pitch": "45–50°",
-  "terrain": "Alpine, Glacier, Couloir"
+  "terrain": "Alpine, Glacier, Couloir",
+  "collections": "sea-to-sky-classics"
  },
  {
   "status": "DRAFTED",
@@ -1473,7 +1500,8 @@
   "verify": "Height: 2,892 m (common figure) vs 2,904 m on the trip page; NE face vs NE ridge naming.",
   "aspect": "NE",
   "max_pitch": "45–55°",
-  "terrain": "Glacier, Ridge"
+  "terrain": "Glacier, Ridge",
+  "collections": ""
  },
  {
   "status": "DRAFTED",
@@ -1522,7 +1550,8 @@
   "verify": "Pin location; season. GPX added (1 Jul 2025): 9.5 km loop from 1,866 m near the top of the lifts (50.0961, -122.9012), ≈640 m gain, track high point 2,385 m at 50.0805, -122.8710, 3 h 13 m. High point left blank: Blackcomb Peak is higher than the track (2,436 m on the map?), confirm.",
   "aspect": "",
   "max_pitch": "",
-  "terrain": "Alpine rock, Glacier"
+  "terrain": "Alpine rock, Glacier",
+  "collections": "first-alpine-summit"
  },
  {
   "status": "DRAFTED",
@@ -1571,7 +1600,8 @@
   "verify": "Loop distance, route via Harmony Lake, and current lift ticket and opening dates.",
   "aspect": "",
   "max_pitch": "",
-  "terrain": "Alpine"
+  "terrain": "Alpine",
+  "collections": ""
  },
  {
   "status": "DRAFTED",
@@ -1624,7 +1654,8 @@
   "verify": "Distance, finish route into the village, and lift ticket rules.",
   "aspect": "",
   "max_pitch": "",
-  "terrain": "Alpine ridge, Forest"
+  "terrain": "Alpine ridge, Forest",
+  "collections": ""
  },
  {
   "status": "DRAFTED",
@@ -1677,7 +1708,8 @@
   "verify": "Distance and gain; watershed rules (dogs, swimming); trailhead name.",
   "aspect": "",
   "max_pitch": "",
-  "terrain": "Forest, Alpine meadow"
+  "terrain": "Forest, Alpine meadow",
+  "collections": ""
  },
  {
   "status": "DRAFTED",
@@ -1730,7 +1762,8 @@
   "verify": "Distance, gain and current hut status and booking rules.",
   "aspect": "",
   "max_pitch": "",
-  "terrain": "Forest, Boulder, Alpine"
+  "terrain": "Forest, Boulder, Alpine",
+  "collections": ""
  },
  {
   "status": "DRAFTED",
@@ -1783,7 +1816,8 @@
   "verify": "P1 check 2 Nov. Still yours: which face – your 2012 post says north, a UBC VOC 2018 report says the east side. Couloir position and length unknown; pin is at the summit. gain_m blank (heli, landing ≈2,200 m) or ≈2,300 m (on foot)? Do you sell guided Pencil days (e.g. custom heli)? If not, rewrite go_guided – neither linked course runs on Currie, and Big Mountain still shows 2025/26 dates. Is the photo (c.jpg, 2012) actually the Pencil? Guide quote blank.",
   "aspect": "",
   "max_pitch": "",
-  "terrain": "Alpine, Couloir"
+  "terrain": "Alpine, Couloir",
+  "collections": ""
  },
  {
   "status": "DRAFTED",
@@ -1836,7 +1870,8 @@
   "verify": "P1 check 2 Nov. Still yours: do you hold a BC Parks park use permit for Joffre Lakes Park and the Cerise Creek Conservancy? (The Verify log marked this resolved with no finding.) Ridge name: 'north ridge' (climberkyle) vs 'northeast ridge' (UBC VOC) – pick one. Big Mountain Skiing runs in Whistler with only 2025/26 dates – drop or label as a skills step? Photo blank – your old Duffey post has a Matier west-face shot. Guide quote blank.",
   "aspect": "NW",
   "max_pitch": "45–50°",
-  "terrain": "Alpine, Glacier"
+  "terrain": "Alpine, Glacier",
+  "collections": ""
  },
  {
   "status": "DRAFTED",
@@ -1889,7 +1924,8 @@
   "verify": "P1 check 2 Nov. Still yours: overview says Rohr is 'one of the first peaks you reach along the Duffey', but from Pemberton you pass Joffre and Cerise first – reword? Add winter parking to access (sand-shed pull-off on Highway 99 near Cayoosh Pass; the FSR is a summer 4WD option)? ATES Challenging is a judgement (no official rating; a 2003 report has a 350 m gully and ≈45° near the summit). AST 1+ runs in Whistler, not the Duffey – drop or label as prerequisite. Season: does Southern Exposure corn run into May? Confirm photo d5.jpg is Rohr. Guide quote blank. GPX added: named lines now on the map (Salt shed up, Rohr Lake, Rohr summit, Summit decent, Stellar Bowl, Stellar Pipes, Southern Comfort, Rhor Shoulder, Rhor shoulder high, mid ridge, ridge traverse, easy entrance, shorty, shorty 2, shwack, no glacier). Check the spellings (Rohr/Rhor, descent) and which names you want public.",
   "aspect": "S",
   "max_pitch": "",
-  "terrain": "Treeline, Alpine"
+  "terrain": "Treeline, Alpine",
+  "collections": ""
  },
  {
   "status": "DRAFTED",
@@ -1938,7 +1974,8 @@
   "verify": "Current access and closure rules; distance and gain; what the Joffre Lakes Group trip covers.",
   "aspect": "",
   "max_pitch": "",
-  "terrain": "Forest, Lakes"
+  "terrain": "Forest, Lakes",
+  "collections": ""
  },
  {
   "status": "DRAFTED",
@@ -1995,7 +2032,8 @@
   "verify": "P1 check 2 Nov. Still yours: hut is the 1988 hut run by the Keith Flavelle Memorial Hut Society, first come first served, sleeps 14 (newest sources 2019/2023) – has a reservation system started? Do Joffre day-pass rules apply at the Cerise trailhead? Hazards say 'closed slide path' while the description says the route crosses the debris – check the current BC Parks closure map and make them agree. ATES Complex with level Intermediate – split by objective? Birthday Chute 40–45° unsourced – your number? High point blank. AST 1+ runs in Whistler – drop? Your Joffre Lakes Group page puts the hut in Joffre Lakes Park and still shows '2023 dates TBD'. Park use permit? Confirm photo k7.jpg.",
   "aspect": "",
   "max_pitch": "",
-  "terrain": "Alpine"
+  "terrain": "Alpine",
+  "collections": ""
  },
  {
   "status": "DRAFTED",
@@ -2052,7 +2090,8 @@
   "verify": "P1 check 2 Nov. Still yours: usual exit from Blackcomb; is 'Stairway to Heaven' the same line; couloir angle; 'double summit' unsourced – keep? Level Advanced vs expert skills and ATES Complex – Expert? Gain/distance blank. Steeps and Peaks page doesn't name Phalanx – confirm go_guided. Big Mountain still shows 2025/26 dates. The 2012 Stairmaster posts on old.altusmountainguides.com now show 'under construction'.",
   "aspect": "",
   "max_pitch": "",
-  "terrain": "Alpine"
+  "terrain": "Alpine",
+  "collections": ""
  },
  {
   "status": "DRAFTED",
@@ -2109,7 +2148,8 @@
   "verify": "P1 check 2 Nov. ATES Challenging is a judgement (evo rates the Solitude tour Complex) – Challenging or Complex? Skills say AST 1 recommended; your trip page asks for no AST – match? Lodge pin is a guess. Overview: are the 8 km of north-facing tree ridges south of the lodge (Wildsnow) rather than 'Journeyman Peak to the Solitude Glacier'? 'More snow than Whistler village' is unsourced – keep? Custom Backcountry Ski Trips doesn't list the Callaghan – drop the link or add it there. Trip page is waitlist-only for 2026/27; Snowshoe AST 1 still shows 2025/26. 2013 'Callaghan Lodge' report assumed to be Journeyman. Photo shows the lodge, not skiing.",
   "aspect": "",
   "max_pitch": "",
-  "terrain": "Alpine"
+  "terrain": "Alpine",
+  "collections": ""
  },
  {
   "status": "DRAFTED",
@@ -2162,7 +2202,8 @@
   "verify": "New row (from the 2013 report). Check: do you still guide it (no current Altus page mentions it)? Mountain Project spells it 'Widowmaker Arete'; 5.9, 10 pitches, ≈515 m; some take a 5.10- variation. Crown summit 1,504 m not confirmed in a source. Gain/distance blank (approach drops into Hanes Valley and back). Season is an estimate.",
   "aspect": "",
   "max_pitch": "",
-  "terrain": "Alpine rock"
+  "terrain": "Alpine rock",
+  "collections": ""
  },
  {
   "status": "DRAFTED",
@@ -2215,7 +2256,8 @@
   "verify": "New row (from the 2012 Prow Wall report, which names no routes). Written about the whole wall. Check: is this the wall you climbed (assumed the Chief's Prow Wall, not Murrin Park)? Do you guide 5.12+ lines here? Overlaps with the Teddy Bear's Picnic row – keep both, or merge? Season is a judgement call.",
   "aspect": "",
   "max_pitch": "",
-  "terrain": "Granite"
+  "terrain": "Granite",
+  "collections": ""
  },
  {
   "status": "DRAFTED",
@@ -2268,7 +2310,8 @@
   "verify": "New row (from the 2012 report). Check: original grade 5.12d (Gripped) vs 5.13a (Squamish Climbing Magazine); pitch count not confirmed; Elevator Shaft 5.11c from a forum post. Pin is the Prow Wall, approximate. Do you guide lines this hard?",
   "aspect": "",
   "max_pitch": "",
-  "terrain": "Granite"
+  "terrain": "Granite",
+  "collections": ""
  },
  {
   "status": "DRAFTED",
@@ -2321,7 +2364,8 @@
   "verify": "New row (from the 2013 report). Check: kept the blog's 5.10d, but the linkup skips Great Game's 5.10d first pitch, so it may be 5.10c overall; Great Drain's own grade 5.10b (Mountain Project) vs 5.10a; length ≈120 m estimated; current Mamquam FSR access.",
   "aspect": "",
   "max_pitch": "",
-  "terrain": "Granite"
+  "terrain": "Granite",
+  "collections": ""
  },
  {
   "status": "DRAFTED",
@@ -2374,7 +2418,8 @@
   "verify": "New row (from the 2013 report). Check: grade 5.8+ (Mountain Project) vs 5.9 (blog); 4 vs 3 pitches; it's 28 km north of town – keep in the Squamish zone? Trail vs rappel approach to recommend.",
   "aspect": "",
   "max_pitch": "",
-  "terrain": "Granite"
+  "terrain": "Granite",
+  "collections": ""
  },
  {
   "status": "DRAFTED",
@@ -2431,7 +2476,8 @@
   "verify": "New row (from the 2014 video post). Check: 'Single pitch' vs two pitches; any current Grand Wall-area rockfall closures; season is a judgement call.",
   "aspect": "",
   "max_pitch": "",
-  "terrain": "Granite"
+  "terrain": "Granite",
+  "collections": ""
  },
  {
   "status": "DRAFTED",
@@ -2484,7 +2530,8 @@
   "verify": "New row (from the Oct 2012 Showcase Spire report, which was attached to blackcomb-backcountry). Check: grade and pitches (Mountain Project: Darn Gendarme 5.9; theCrag also lists Darn Cowboy 5.11a and Finestone Cowboy 5.11c); do you guide it (no current Altus page); the Showcase T-bar is being replaced by a chairlift for 2026–27, so confirm summer lift access and the approach; season; discipline (alpine vs rock). Pin is the top of the Showcase run, approximate. No photo URL yet.",
   "aspect": "",
   "max_pitch": "",
-  "terrain": "Alpine rock"
+  "terrain": "Alpine rock",
+  "collections": ""
  },
  {
   "status": "DRAFTED",
@@ -2541,7 +2588,8 @@
   "verify": "New row (from the Oct 2013 report 'Mount Tricouni south and east ridges', which was attached to tricouni-north-ridge). Check: did your trip go up the south ridge, the east ridge or both; grade (sources give class 3 for the upper south ridge, class 4 for the east ridge); summit 2,122 m (BC/Wikipedia) vs 2,075 m on your North Ridge page; own page, or a section on the North Ridge page? Gain/distance blank. Pin copies the North Ridge pin. No photo URL yet.",
   "aspect": "",
   "max_pitch": "",
-  "terrain": "Alpine rock"
+  "terrain": "Alpine rock",
+  "collections": "first-alpine-summit"
  },
  {
   "status": "DRAFTED",
@@ -2590,7 +2638,8 @@
   "verify": "New row from Ross's GPX (10 Jul 2021): 26.2 km, ≈2,530 m GPS gain (runs high; check), high point 1,749 m, 7 h 46 m, starts at the valley near the gondola base and finishes at the gondola summit. Still yours: trail names (Sea to Summit? which Goat Ridge route?), level, season, any scrambling or snow, do we guide it? Photos and guide quote blank.",
   "aspect": "",
   "max_pitch": "",
-  "terrain": "Trail, Alpine ridge"
+  "terrain": "Trail, Alpine ridge",
+  "collections": ""
  },
  {
   "status": "DRAFTED",
@@ -2634,7 +2683,8 @@
   "verify": "New row from Ross's GPX (14 Aug 2021): 36.6 km round trip, ≈2,930 m GPS gain, track high point 2,639 m at 49.9391, -122.9454, about 10.5 h. Trailhead is at 50.0418, -122.9887 (851 m), which sits inside our Whistler area outline; I filed it under Garibaldi Park South by the summit. Still yours: summit height (map shows higher than the track), which trailhead and approach, grade, glacier gear, level, season, do we guide it? Photos and guide quote blank.",
   "aspect": "",
   "max_pitch": "",
-  "terrain": "Glacier, Rock"
+  "terrain": "Glacier, Rock",
+  "collections": ""
  },
  {
   "status": "DRAFTED",
@@ -2683,7 +2733,8 @@
   "verify": "New row from Ross's GPX: 27.9 km, ≈2,080 m GPS gain, high point 2,523 m, start 50.2506, -122.7950 (2,274 m, so the access is by air or a long approach?), finish 50.1751, -122.8619; camp options 1A/1B and 2A/2B/2C (all show on the map). The start is in our Pemberton area and the finish in Whistler; filed under Pemberton. Still yours: access (heli drop?) and exit, number of days, ATES, level, season, product link. Photos and guide quote blank.",
   "aspect": "",
   "max_pitch": "",
-  "terrain": "Glacier, Alpine"
+  "terrain": "Glacier, Alpine",
+  "collections": "classic-multi-day-traverses"
  },
  {
   "status": "DRAFTED",
@@ -2727,7 +2778,8 @@
   "verify": "New row from Ross's GPX (1 Jun 2020): 6.5 km one way, ≈1,050 m GPS gain, Montenvers (1,795 m) to the hut area (2,703 m). Filed as Run per Ross. Still yours: level, season, ladder and glacier notes, do we guide in Chamonix? Photos and guide quote blank.",
   "aspect": "",
   "max_pitch": "",
-  "terrain": "Trail, Glacier"
+  "terrain": "Trail, Glacier",
+  "collections": ""
  },
  {
   "status": "DRAFTED",
@@ -2771,7 +2823,8 @@
   "verify": "New row from Ross's GPX: 8 plotted stages, ≈110 km, start near Bressanone/Plose (46.5975, 11.6792), finish near Feltre (46.0653, 11.8302). The tracks have no elevation, so high point, gain and times are blank. Filed as Run per Ross. Still yours: huts for each night, gain, which via ferrata sections, level, season, is this the route we run or a plan? Photos and guide quote blank.",
   "aspect": "",
   "max_pitch": "",
-  "terrain": "Trail, Via ferrata"
+  "terrain": "Trail, Via ferrata",
+  "collections": "classic-multi-day-traverses"
  },
  {
   "status": "DRAFTED",
@@ -2815,7 +2868,8 @@
   "verify": "New row from Ross's GPX (no timestamps): 38.7 km loop, ≈4,100 m gain, starts and ends near sea level (49.6688, -123.1681). Ross: it links Squamish Buttress, Habrich, Sky Pilot, Co-Pilot and Goat Ridge. Track tops out at 2,006 m near Sky Pilot, below the 2,031 m summit (same GPS shortfall as the Sky Pilot track), so the high point uses the summit. Still yours: Run or Alpine (it has 5.10c climbing; filed as Run), order of peaks, how Co-Pilot and Habrich are climbed, our time for it, level, do we guide it? Photos and guide quote blank.",
   "aspect": "",
   "max_pitch": "",
-  "terrain": "Rock, Alpine, Trail"
+  "terrain": "Rock, Alpine, Trail",
+  "collections": ""
  },
  {
   "status": "DRAFTED",
@@ -2859,7 +2913,8 @@
   "verify": "New row from Ross's GPX (2 Jul 2026): 12.5 km, ≈1,500 m gain, start 45.9847, 6.9272 (1,261 m), high 2,696 m at the hut, finish 46.0144, 6.9560 (1,837 m, near the Charamillon lift?), 3 h 41 m. Still yours: start village, finish (lift down?), level, season, do we guide in Chamonix? Photos and guide quote blank.",
   "aspect": "",
   "max_pitch": "",
-  "terrain": "Trail"
+  "terrain": "Trail",
+  "collections": ""
  },
  {
   "status": "DRAFTED",
@@ -2903,7 +2958,8 @@
   "verify": "New row from Ross's GPX (3 Jul 2026): 8.9 km one way, ≈1,470 m gain, start 45.9148, 6.8654 (1,045 m), high 2,412 m at 45.8880, 6.8745, finish 45.9011, 6.8857 (2,295 m), 2 h 31 m. I read the finish as the Plan de l'Aiguille lift station and the high point as the old Gare des Glaciers cable car station; confirm both and the start (Les Bossons?). Level, season, do we guide in Chamonix? Photos and guide quote blank.",
   "aspect": "",
   "max_pitch": "",
-  "terrain": "Trail"
+  "terrain": "Trail",
+  "collections": ""
  },
  {
   "status": "DRAFTED",
@@ -2947,7 +3003,8 @@
   "verify": "New row from Ross's two GPX files (7 Jul 2026), joined into one track: up 8.1 km and ≈2,520 m to 3,215 m where the phone died, then 14.4 km and ≈600 m on the descent from 2,911 m via the Gianetti hut back to 1,204 m near Bondo. About 13 h car to car including the gap. Summit 3,308 m from the map. Still yours: grade, how the descent goes (which pass back into Switzerland), level, season, do we guide it? Photos and guide quote blank.",
   "aspect": "",
   "max_pitch": "",
-  "terrain": "Rock, Alpine"
+  "terrain": "Rock, Alpine",
+  "collections": ""
  },
  {
   "status": "DRAFTED",
@@ -2996,7 +3053,8 @@
   "verify": "New row from Ross's GPX (29 Jul 2026): 2.9 km loop, ≈450 m gain, start 49.6772, -123.1537 (75 m), high point 524 m at 49.6808, -123.1467, 55 min. Still yours: which way it goes and what it tops out on (the track stops below the First Peak at 610 m), the scramble grade, Run or Rock (filed as Run), level, season, do we guide it? Photos and guide quote blank.",
   "aspect": "",
   "max_pitch": "",
-  "terrain": "Rock, Trail"
+  "terrain": "Rock, Trail",
+  "collections": ""
  },
  {
   "status": "DRAFTED",
@@ -3040,7 +3098,8 @@
   "verify": "New row from Ross's GPX 'Entreves' (31 Aug 2024): 8.1 km round trip, ≈480 m gain, start and finish at 3,408 m near Punta Helbronner (45.8469, 6.9306), track high point 3,521 m at 45.8420, 6.9152, 4 h 35 m. I named it the Aiguille d'Entrèves traverse from the file name and location; confirm, plus the summit height (track stays below the map's), grade, which lift you used, level, do we guide it? Photos and guide quote blank.",
   "aspect": "",
   "max_pitch": "",
-  "terrain": "Glacier, Rock"
+  "terrain": "Glacier, Rock",
+  "collections": ""
  },
  {
   "status": "DRAFTED",
@@ -3084,7 +3143,8 @@
   "verify": "New row from Ross's GPX (30 Aug 2024): 6.6 km one way, ≈630 m gain, start 45.9360, 6.8528 (2,014 m, Planpraz), high 2,468 m at 45.9605, 6.8568, finish 45.9686, 6.8729 (2,392 m), 1 h 26 m. Name from Ross. Track finishes above La Flégère: confirm the finish, level, season, do we guide in Chamonix? Photos and guide quote blank.",
   "aspect": "",
   "max_pitch": "",
-  "terrain": "Trail"
+  "terrain": "Trail",
+  "collections": ""
  },
  {
   "status": "DRAFTED",
@@ -3133,7 +3193,8 @@
   "verify": "New row from Ross's GPX (13 Jun 2026): the lower half of the trail, 3.1 km, ≈520 m gain, from 678 m at Whistler Village (50.1154, -122.9519) to 1,196 m (50.1057, -122.9235), 39 min. Still yours: full distance and top of the trail, how people get down, level, season, do we guide it? Photos and guide quote blank.",
   "aspect": "",
   "max_pitch": "",
-  "terrain": "Trail"
+  "terrain": "Trail",
+  "collections": ""
  },
  {
   "status": "DRAFTED",
@@ -3182,6 +3243,7 @@
   "verify": "New row from Ross's GPX (25 May 2026): 4.5 km loop, ≈340 m gain, start 49.7885, -123.1312 (157 m), high point 465 m at 49.7746, -123.1296, 1 h 9 m. Name from Ross. Still yours: trail names, trailhead, level, season, do we guide it? Photos and guide quote blank.",
   "aspect": "",
   "max_pitch": "",
-  "terrain": "Trail"
+  "terrain": "Trail",
+  "collections": ""
  }
 ]
