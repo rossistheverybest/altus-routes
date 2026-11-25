@@ -482,3 +482,32 @@ h1{font-size:clamp(44px,7vw,96px)}
 @media (max-width:900px){.hub{height:82svh;margin:0}}
 /* topo backdrops graded toward the main site's muted photo look */
 .area-topo .tiles,.cimg .tiles,.hd-thumb .tiles,.hc-img .tiles,.hero .tiles,.cph .tiles{filter:saturate(.45) sepia(.12) contrast(1.05) brightness(.97)}
+
+/* difficulty ratings */
+.ratings{display:flex;flex-direction:column;gap:10px;margin-top:18px}
+.rating{display:grid;grid-template-columns:130px 1fr auto;align-items:center;gap:6px 12px}
+.rl{display:inline-flex;align-items:center;gap:8px;font:600 13px/1 var(--f-tag);letter-spacing:.14em;text-transform:uppercase}
+.rinfo{width:18px;height:18px;border-radius:50%;border:1px solid var(--line);background:#fff;font:600 11px/1 var(--f-tag);color:var(--muted);cursor:help;padding:0}
+.rbar{display:grid;grid-template-columns:repeat(5,1fr);gap:4px}
+.rbar i{height:8px;background:var(--btn)}
+.rbar i.on{background:var(--copper)}
+.rv{font:700 14px/1 var(--f-tag);letter-spacing:.08em;color:var(--copper-tx)}
+.rhelp{grid-column:1/-1;font-size:13px;line-height:1.45;color:var(--muted);display:none}
+.rating:hover .rhelp,.rating:focus-within .rhelp{display:block}
+.rnote{margin:4px 0 0;font-size:12.5px;color:var(--muted)}
+/* elevation profile */
+.eprof{margin:18px 0 0}
+.eprof svg{width:100%;height:auto;display:block}
+.egrid{stroke:rgba(20,20,20,.1);stroke-width:1}
+.earea{fill:rgba(199,154,107,.28)}
+.eline{fill:none;stroke:var(--copper-tx);stroke-width:2;stroke-linejoin:round}
+.elab{font:600 11px var(--f-tag);letter-spacing:.06em;fill:var(--muted)}
+.eprof figcaption{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:6px;font:600 12.5px/1.3 var(--f-tag);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+/* byline + sources */
+.hero .byline{margin:14px 0 0;font:600 13px/1.3 var(--f-tag);letter-spacing:.14em;text-transform:uppercase;color:var(--copper-lt)}
+.sources{border-top:1px solid var(--line);padding-top:22px}
+.sources dl{display:grid;grid-template-columns:200px 1fr;gap:8px 20px;margin:12px 0 0;font-size:15.5px}
+.sources dt{font:600 12.5px/1.6 var(--f-tag);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.sources dd{margin:0}.sources ul{margin:0;padding-left:18px}
+.sources a{color:var(--copper-tx);text-decoration:underline;text-underline-offset:3px}
+@media (max-width:640px){.sources dl{grid-template-columns:1fr;gap:2px}.sources dd{margin-bottom:10px}.rating{grid-template-columns:110px 1fr auto}}

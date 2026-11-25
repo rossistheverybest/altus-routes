@@ -9,7 +9,8 @@ import Card from "../../../../components/Card";
 import CragPage from "../../../../components/CragPage";
 import TopoMap from "../../../../components/TopoMap";
 import TopoTiles from "../../../../components/TopoTiles";
-import Profile, { hasProfile } from "../../../../components/Profile";
+import Ratings, { hasRatings } from "../../../../components/Ratings";
+import ElevationProfile from "../../../../components/ElevationProfile";
 import Carousel from "../../../../components/Carousel";
 
 const CRAG_SLUG = "stawamus-chief";
@@ -54,6 +55,12 @@ export default async function RoutePage({ params }) {
     : SITE_NOINDEX ? Object.keys(SHOT_TITLES).map((k, n) => ({ title: `${SHOT_TITLES[k]} · photo coming`, node: <span className="cph"><TopoTiles lat={r.lat} lng={r.lng} z={13 + (n % 2)} cols={7} rows={4} className="dim" /><span className="cphl">Photo coming<small>{SHOT_TITLES[k]}</small></span></span> })) : [];
   const url = `${SITE_URL}${routeHref(r)}`;
   const point = { lat: r.lat, lng: r.lng };
+  // Where the line came from, e.g. "sky-pilot.gpx (Ross, Gaia, 12 Jul 2017)" -> "Ross, Gaia, 12 Jul 2017".
+  const gpsSource = (r.gpx_file || "").match(/\(([^)]+)\)/)?.[1] || (r.gpx_file ? "Altus GPS track" : "");
+  const profLine = (r.tracks || []).filter((l) => l.prof).sort((a, b) => (b.km || 0) - (a.km || 0))[0];
+  const mapTracks = r.tracks ? r.tracks.map(({ prof, ...l }) => l) : null;
+  const sources = (r.sources || "").split("\n").map((l) => l.split("|").map((x) => x.trim())).filter((x) => x[0]);
+  const summer = r.discipline !== "ski";
 
   const facts = [
     [r.discipline === "ski" ? "Vertical" : "Elevation gain", unit(r.gain_m, "m")],
@@ -81,7 +88,7 @@ export default async function RoutePage({ params }) {
     </>);
   } else if (r.tracks) {
     line = (<>
-      <TopoMap mode="lines" tracks={r.tracks} areas={r.areas} discipline={r.discipline} className="tall" />
+      <TopoMap mode="lines" tracks={mapTracks} areas={r.areas} discipline={r.discipline} className="tall" />
       {r.tracks.length > 1 && <ol className="lines">{r.tracks.map((l, i) => <li key={i}><b>{i + 1}</b>{l.name}{l.km ? <span className="km"> · {Number(l.km).toFixed(1)} km</span> : null}</li>)}</ol>}
     </>);
   } else {
@@ -101,6 +108,7 @@ export default async function RoutePage({ params }) {
             <p className="eyebrow">{DISC[r.discipline].label}{r.style ? ` · ${r.style}` : ""} · {z.name}</p>
             <h1 className="routetitle">{r.name}</h1>
             <p className="sum">{r.summary}</p>
+            {(r.author || r.reviewed_by) && <p className="byline">{r.author ? `Written by ${r.author}` : ""}{r.author && r.reviewed_by ? " · " : ""}{r.reviewed_by ? `Reviewed by ${r.reviewed_by}${r.reviewed_date ? `, ${fmtDate(r.reviewed_date)}` : ""}` : ""}</p>}
           </div>
         </header>
 
@@ -111,6 +119,7 @@ export default async function RoutePage({ params }) {
             <section className="factcard" aria-labelledby="facts">
               <h2 id="facts" className="cardtitle">Route Facts</h2>
               <dl className="facts">{facts.map(([k, v]) => <div key={k}><dt>{k}</dt><dd>{v}</dd></div>)}</dl>
+              {hasRatings(r) && <Ratings r={r} />}
             </section>
             <div className="guide" id="guide">
               <p className="eyebrow">Go with a guide</p>
@@ -121,8 +130,8 @@ export default async function RoutePage({ params }) {
           <div className="profilecol" id="line">
             <h2 className="sectitle">The Line</h2>
             {line}
-            <p className="caption">Lines are approximate. Your guide chooses the line on the day.</p>
-            {hasProfile(r) && (<><h2 className="sectitle" style={{ marginTop: 28 }}>Route Profile</h2><Profile r={r} /></>)}
+            <p className="caption">{gpsSource ? `Line: GPS track (${gpsSource}). ` : ""}Lines are approximate and not for navigation. Your guide chooses the line on the day.</p>
+            {profLine && <ElevationProfile prof={profLine.prof} label={r.tracks.length > 1 ? `Elevation: ${profLine.name}` : "Elevation profile"} />}
           </div>
         </div>
 
@@ -144,10 +153,28 @@ export default async function RoutePage({ params }) {
             <dl className="details">
               <dt>Access</dt><dd>{r.access}</dd>
               <dt>Zone</dt><dd><Link href={zoneHref(z)}>{z.name}</Link></dd>
-              <dt>Before you go</dt><dd>Check the avalanche forecast at <a href="https://avalanche.ca">avalanche.ca</a> and BC Parks for closures and permits on the day.</dd>
+              <dt>Before you go</dt>
+              {r.zone === "europe"
+                ? <dd>Check the local mountain weather and hut or lift status before you go.</dd>
+                : summer
+                ? <dd>Check the weather forecast and <a href="https://bcparks.ca">BC Parks</a> or Parks Canada for trail closures and permits on the day.</dd>
+                : <dd>Check the avalanche forecast at <a href="https://avalanche.ca">avalanche.ca</a> and BC Parks or Parks Canada for closures and permits on the day.</dd>}
             </dl>
           </aside>
         </div>
+
+        <section className="sources" id="sources" aria-labelledby="srch">
+          <p className="eyebrow" id="srch">Sources and review</p>
+          <dl>
+            {r.author && <><dt>Written by</dt><dd>{r.author}</dd></>}
+            <dt>Professional review</dt><dd>{r.reviewed_by ? `${r.reviewed_by}${r.reviewed_date ? `, ${fmtDate(r.reviewed_date)}` : ""}` : "Not yet reviewed"}</dd>
+            {r.last_updated && <><dt>Last updated</dt><dd>{fmtDate(r.last_updated)}</dd></>}
+            {gpsSource && <><dt>Route line</dt><dd>GPS track ({gpsSource})</dd></>}
+            {r.stats_source && <><dt>Route stats</dt><dd>{/gpx/i.test(r.stats_source) ? `From our GPS track${/plotted/i.test(r.stats_source) ? " (plotted)" : ""}` : /estimate/i.test(r.stats_source) ? "Guide estimate" : r.stats_source}</dd></>}
+            {shots.length > 0 && <><dt>Photos</dt><dd>{r.photo_credit || "Altus Mountain Guides"}</dd></>}
+            {sources.length > 0 && <><dt>References</dt><dd><ul>{sources.map(([t, u], i) => <li key={i}>{u ? <a href={u} rel="noopener">{t}</a> : t}</li>)}</ul></dd></>}
+          </dl>
+        </section>
 
         <p className="disclaimer">Your guide chooses the objective and the line on the day based on conditions, weather and the group. Route descriptions are general information, not instructions.{r.last_updated ? ` Last updated ${fmtDate(r.last_updated)}.` : ""}</p>
 
@@ -161,14 +188,16 @@ export default async function RoutePage({ params }) {
 
       <nav className="routenav gut" aria-label="On this page">
         <div className="in">
-          <a href="#line">The Line</a><a href="#photos">Photos</a><a href="#overview">Overview</a><a href="#hazards">Hazards</a><a href="#reports">Trip Reports</a>
+          <a href="#line">The Line</a><a href="#photos">Photos</a><a href="#overview">Overview</a><a href="#hazards">Hazards</a><a href="#reports">Trip Reports</a><a href="#sources">Sources</a>
           <a className="primary" href="#guide">Go With A Guide</a>
         </div>
       </nav>
 
       <JsonLd data={[
         { "@context": "https://schema.org", "@type": "Article", headline: `${r.name}: ${DISC[r.discipline].kind} route guide`, description: r.summary, url,
-          author: { "@type": "Person", name: r.author || "Ross Berg" }, dateModified: r.last_updated || undefined,
+          author: { "@type": "Person", name: r.author || "Ross Berg" }, dateModified: r.reviewed_date || r.last_updated || undefined,
+          reviewedBy: r.reviewed_by ? { "@type": "Person", name: r.reviewed_by } : undefined,
+          citation: sources.length ? sources.map(([t, u]) => (u ? { "@type": "CreativeWork", name: t, url: u } : t)) : undefined,
           image: r.photos.hero ? `${SITE_URL}${r.photos.hero}` : undefined,
           publisher: { "@type": "Organization", name: "Altus Mountain Guides", url: "https://altusmountainguides.com" } },
         { "@context": "https://schema.org", "@type": "TouristAttraction", name: r.name, description: r.summary, url,
