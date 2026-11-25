@@ -37,6 +37,18 @@ function km(c) {
   }
   return +d.toFixed(1);
 }
+// Elevation profile for a line: ~120 points of [km from start, elevation m]. Lines with no elevation get none.
+function profile(c) {
+  if (!c.length || c[0].length < 3 || !c.some((p) => p[2])) return null;
+  const pts = []; let d = 0;
+  for (let i = 0; i < c.length; i++) {
+    if (i) { const [x1, y1] = c[i - 1], [x2, y2] = c[i], r = Math.PI / 180; d += 12742 * Math.asin(Math.sqrt(Math.sin(((y2 - y1) * r) / 2) ** 2 + Math.cos(y1 * r) * Math.cos(y2 * r) * Math.sin(((x2 - x1) * r) / 2) ** 2)); }
+    pts.push([d, c[i][2]]);
+  }
+  const step = Math.max(1, Math.floor(pts.length / 120));
+  const out = pts.filter((_, i) => i % step === 0); if (out[out.length - 1] !== pts[pts.length - 1]) out.push(pts[pts.length - 1]);
+  return out.map(([k, e]) => [+k.toFixed(2), Math.round(e)]);
+}
 // "Day 2 - ..." before "Day 10 - ...", everything else keeps file order.
 const dayNum = (n) => { const m = /^day\s*(\d+)/i.exec(n || ""); return m ? +m[1] : null; };
 const drafts = {};
@@ -104,10 +116,11 @@ for (const file of files) {
       // Gaia draws areas as closed tracks sometimes; a closed line tagged "area" in its name becomes a zone.
       const name = (f.properties?.name || "").trim();
       const len = t === "LineString" ? km(f.geometry.coordinates) : 0;
+      const prof = t === "LineString" ? profile(f.geometry.coordinates) : null;
       let geometry = { type: t, coordinates: round(f.geometry.coordinates.map ? f.geometry.coordinates : []) };
       if (t === "LineString") geometry.coordinates = simplify(geometry.coordinates.map((c) => c.slice(0, 2)));
       if (t === "Polygon") geometry.coordinates = geometry.coordinates.map((r) => r.map((c) => c.slice(0, 2)));
-      out.push({ type: "Feature", properties: { slug, zone, discipline, kind: t === "Polygon" ? "area" : "line", name, n: t === "LineString" ? ++n : 0, ...(len ? { km: len } : {}) }, geometry });
+      out.push({ type: "Feature", properties: { slug, zone, discipline, kind: t === "Polygon" ? "area" : "line", name, n: t === "LineString" ? ++n : 0, ...(len ? { km: len } : {}), ...(prof ? { prof } : {}) }, geometry });
     }
   } catch (e) { console.warn(`build-geo: could not read ${file}: ${e.message}`); }
 }

@@ -61,7 +61,7 @@ async function main() {
     const lat = parseFloat(r.lat), lng = parseFloat(r.lng);
     if (Number.isNaN(lat) || Number.isNaN(lng)) { problems.push(`${r.slug}: missing lat/lng`); continue; }
     routes.push({
-      ...old, ...r, lat, lng, products: products(r.products), last_updated: isoDate(r.last_updated),
+      ...old, ...r, lat, lng, products: products(r.products), last_updated: isoDate(r.last_updated), reviewed_date: isoDate(r.reviewed_date),
       // Columns that may not exist in the sheet yet keep their current values.
       aspect: r.aspect ?? old.aspect ?? "", max_pitch: r.max_pitch ?? old.max_pitch ?? "", terrain: r.terrain ?? old.terrain ?? "",
     });

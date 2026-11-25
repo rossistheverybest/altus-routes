@@ -24,9 +24,24 @@ export default function HubMap({ zones, routes, geometry, initialZone = null, ch
   const inZone = z ? vis.filter((r) => r.zone === z.slug) : vis;
   const count = (slug) => vis.filter((r) => !slug || r.zone === slug).length;
 
+  // Filters live in the URL (?act=ski,rock&level=Intro&q=...), so searches can be shared and survive the back button.
+  const [ready, setReady] = useState(false);
+  useEffect(() => {
+    try {
+      const sp = new URLSearchParams(window.location.search);
+      const act = (sp.get("act") || "").split(",").filter((d) => DISC[d]);
+      if (act.length) setDisc(act);
+      if (LEVELS.includes(sp.get("level"))) setLevel(sp.get("level"));
+      if (sp.get("q")) setQ(sp.get("q"));
+    } catch {}
+    setReady(true);
+  }, []);
+  const qs = () => { const sp = new URLSearchParams(); if (disc.length) sp.set("act", disc.join(",")); if (level) sp.set("level", level); if (q) sp.set("q", q); const t = sp.toString(); return t ? `?${t}` : ""; };
+  useEffect(() => { if (!ready) return; try { window.history.replaceState(null, "", window.location.pathname + qs()); } catch {} }, [disc, level, q, ready]); // eslint-disable-line react-hooks/exhaustive-deps
+
   const pickZone = (slug) => {
     setZone(slug); setCard(null);
-    try { window.history.replaceState(null, "", slug ? zoneHref(slug) : "/routes"); document.title = slug ? `${zoneBy[slug].name} Routes | Altus Mountain Guides` : "Altus Mountain Tick List | Altus Mountain Guides"; } catch {}
+    try { window.history.replaceState(null, "", (slug ? zoneHref(slug) : "/routes") + qs()); document.title = slug ? `${zoneBy[slug].name} Routes | Altus Mountain Guides` : "Altus Mountain Tick List | Altus Mountain Guides"; } catch {}
   };
   const pickRoute = (p) => {
     if (p.hut) { setCard({ ...p }); return; }
